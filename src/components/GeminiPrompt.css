@@ -9,12 +9,15 @@
     color: #e8eaed;
     box-sizing: border-box;
     min-height: 600px;
+    height: 100%;
   }
   
   .chat-history {
     flex: 1;                /* Expands to fill available space above form */
     overflow-y: auto;
     padding: 20px;
+    min-height: 0;
+    padding-bottom: 8px;
   }
   
   .message-bubble {
@@ -64,4 +67,12 @@
   button:hover {
     background-color: #5f6368;
   }
-  
+
+  .message-input-container {
+    margin-top: auto;
+    padding: 10px 0;
+    flex-shrink: 0;
+    position: sticky;
+    bottom: 0;
+    background-color: inherit; /* Match parent background */
+  }

@@ -1,16 +1,65 @@
 /* src/components/MainArea.css */
 .main-area {
-    flex: 1;
-    padding: 20px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  height: 100%;
+  max-height: 100vh;
+  overflow: hidden;
 }
 
 .system-instructions-container {
-  margin-bottom: 20px;
-  width: 100%;
-  padding: 10px;
+  background-color: #2d2d2d;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+  padding: 14px;
+  transition: all 0.3s ease;
+  border: 1px solid #444;
+  flex-shrink: 0;
+}
+
+.system-instructions-container.collapsed {
+  padding: 10px 14px;
+  max-height: 60px;
+  overflow: hidden;
+}
+
+.system-instructions-container.expanded {
+  max-height: 200px; /* Limit height to avoid pushing content down too far */
+}
+
+.instructions-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.instructions-header label {
+  font-weight: 600;
+  font-size: 15px;
+  color: #e0e0e0;
+  margin: 0;
+}
+
+.toggle-button {
+  background: #444;
+  border: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #e0e0e0;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.toggle-button:hover {
+  background: #555;
 }
 
 .system-instructions-container label {
@@ -22,17 +71,62 @@
 
 .system-instructions-input {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-family: inherit;
+  padding: 10px 12px;
+  border: 1px solid #555;
+  border-radius: 8px;
   font-size: 14px;
-  resize: vertical;
+  resize: none;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+  font-family: inherit;
+  background-color: #333;
+  color: #e0e0e0;
+}
+
+.system-instructions-input:focus {
+  border-color: #4d7eff;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(77, 126, 255, 0.3);
 }
 
 .instructions-help {
-  margin-top: 5px;
-  font-size: 12px;
-  color: #666;
-  font-style: italic;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  color: #aaa;
+  font-size: 13px;
+  padding: 6px 8px;
+  background-color: #3a3a3a;
+  border-radius: 6px;
+}
+
+.info-icon {
+  color: #4d7eff;
+  font-style: normal;
+}
+
+/* Animation for expanding/collapsing */
+.system-instructions-container.expanded {
+  max-height: 200px;
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .main-area {
+    padding: 10px;
+    gap: 15px;
+  }
+  
+  .system-instructions-container {
+    padding: 12px;
+  }
+}
+
+/* Ensure proper layout for the GeminiPrompt component */
+.main-area > :last-child {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
 }
