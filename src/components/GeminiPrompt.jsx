@@ -13,6 +13,7 @@ function GeminiPrompt({ selectedModel, systemInstructions }) {
   const [expandedMessages, setExpandedMessages] = useState({});
   const [editingMessageId, setEditingMessageId] = useState(null);
   const [editingContent, setEditingContent] = useState('');
+  const [activeDropdown, setActiveDropdown] = useState(null);
 
   const toggleMessageExpansion = (messageId) => {
     setExpandedMessages(prev => ({
@@ -37,6 +38,53 @@ function GeminiPrompt({ selectedModel, systemInstructions }) {
 
   const cancelMessageEdit = () => {
     setEditingMessageId(null);
+  };
+  
+  const toggleDropdown = (index, e) => {
+    e.stopPropagation();
+    
+    if (activeDropdown === index) {
+      setActiveDropdown(null);
+    } else {
+      // Calculate position for the dropdown
+      const buttonRect = e.currentTarget.getBoundingClientRect();
+      const dropdownPosition = {
+        top: buttonRect.bottom + 5,
+        left: buttonRect.left - 120, // Position to the left of the button
+      };
+      
+      setActiveDropdown({index, position: dropdownPosition});
+    }
+  };
+
+  // Close dropdown when clicking outside or when scrolling
+  useEffect(() => {
+    const handleClickOutside = () => setActiveDropdown(null);
+    const handleScroll = () => setActiveDropdown(null);
+    
+    document.addEventListener('click', handleClickOutside);
+    document.addEventListener('scroll', handleScroll, true);
+    
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+      document.removeEventListener('scroll', handleScroll, true);
+    };
+  }, []);
+  
+  const handleDeleteMessage = (index) => {
+    setMessages(prevMessages => prevMessages.filter((_, i) => i !== index));
+    setActiveDropdown(null);
+  };
+
+  const handleCopyText = (content) => {
+    navigator.clipboard.writeText(content);
+    setActiveDropdown(null);
+  };
+
+  const handleCopyMarkdown = (content) => {
+    // Copy the raw markdown content
+    navigator.clipboard.writeText(content);
+    setActiveDropdown(null);
   };
   
   const handleRegenerateMessage = async (index) => {
@@ -120,7 +168,19 @@ function GeminiPrompt({ selectedModel, systemInstructions }) {
                   </button>
                   <button onClick={() => startEditingMessage(index, msg.content)}>✏️</button>
                   <button onClick={() => handleRegenerateMessage(index)}>💎</button>
-                  <button>🍔</button>
+                  <div className="dropdown-container">
+                    <button onClick={(e) => toggleDropdown(index, e)}>🍔</button>
+                    {activeDropdown && activeDropdown.index === index && (
+                      <div className="dropdown-menu" style={{
+                        top: `${activeDropdown.position.top}px`,
+                        left: `${activeDropdown.position.left}px`
+                      }}>
+                        <button onClick={() => handleDeleteMessage(index)}>Delete</button>
+                        <button onClick={() => handleCopyText(msg.content)}>Copy text</button>
+                        <button onClick={() => handleCopyMarkdown(msg.content)}>Copy markdown</button>
+                      </div>
+                    )}
+                  </div>
                 </>
               )}
             </div>
