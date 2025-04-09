@@ -120,6 +120,7 @@ function GeminiPrompt({ selectedModel, systemInstructions }) {
                   </button>
                   <button onClick={() => startEditingMessage(index, msg.content)}>✏️</button>
                   <button onClick={() => handleRegenerateMessage(index)}>💎</button>
+                  <button>🍔</button>
                 </>
               )}
             </div>
