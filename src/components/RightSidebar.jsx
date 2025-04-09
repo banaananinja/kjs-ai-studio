@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import './RightSidebar.css';
 
-function RightSidebar({ selectedModel, setSelectedModel, temperature = 0.7, setTemperature }) {
+function RightSidebar({ selectedModel, setSelectedModel, temperature = 1, setTemperature }) {
   // Define state variables for dropdown toggles
   const [toolsOpen, setToolsOpen] = useState(false);
   const [advancedOpen, setAdvancedOpen] = useState(false);
@@ -10,7 +10,7 @@ function RightSidebar({ selectedModel, setSelectedModel, temperature = 0.7, setT
   // Add state variables for advanced parameters
   const [outputLength, setOutputLength] = useState('');
   const [stopSequences, setStopSequences] = useState('');
-  const [topP, setTopP] = useState(0.8);
+  const [topP, setTopP] = useState(0.95);
 
   const models = [
     { name: "Gemini 2.5 Pro Preview", code: "gemini-2.5-pro-preview-03-25" },
