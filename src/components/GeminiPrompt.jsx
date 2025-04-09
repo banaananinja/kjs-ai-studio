@@ -1,5 +1,5 @@
 // src/components/GeminiPrompt.jsx
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import rehypeHighlight from 'rehype-highlight';
 import remarkGfm from 'remark-gfm';
@@ -10,6 +10,14 @@ function GeminiPrompt({ selectedModel, systemInstructions }) {
   const [messages, setMessages] = useState([]);
   const [currentPrompt, setCurrentPrompt] = useState('');
   const [loading, setLoading] = useState(false);
+  const [expandedMessages, setExpandedMessages] = useState({});
+
+  const toggleMessageExpansion = (messageId) => {
+    setExpandedMessages(prev => ({
+      ...prev,
+      [messageId]: !prev[messageId]
+    }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,9 +47,14 @@ function GeminiPrompt({ selectedModel, systemInstructions }) {
     <div className="gemini-prompt">
       <div className="chat-history">
         {messages.map((msg, index) => (
-          <div key={index} className={`message-bubble ${msg.role}`}>
+          <div 
+            key={index} 
+            className={`message-bubble ${msg.role} ${expandedMessages[index] ? 'expanded' : ''}`}
+          >
             <div className="message-actions">
-              <button>➕</button>
+              <button onClick={() => toggleMessageExpansion(index)}>
+                {expandedMessages[index] ? '➖' : '➕'}
+              </button>
               <button>✏️</button>
               <button>💎</button>
               <button>🍔</button>

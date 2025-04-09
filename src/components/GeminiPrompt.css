@@ -25,6 +25,9 @@
     padding: 10px;
     border-radius: 4px;
     position: relative;
+    max-height: 200px; /* Set a default maximum height */
+    overflow: hidden;
+    transition: max-height 0.3s ease;
   }
   
   .message-bubble.user {
@@ -35,6 +38,33 @@
   .message-bubble.assistant {
     background-color: #3c4043;
     align-self: flex-start;
+  }
+
+  .message-bubble .message-content {
+    max-height: 150px; /* Even shorter than the bubble to account for padding and sender name */
+    overflow-y: auto;
+    padding-right: 10px;
+  }
+
+  .message-bubble.expanded {
+    max-height: none; /* Remove max height limitation when expanded */
+  }
+
+  .message-bubble.expanded .message-content {
+    max-height: none; /* Remove max height for content when expanded */
+  }
+
+  .message-content::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .message-content::-webkit-scrollbar-thumb {
+    background-color: #5f6368;
+    border-radius: 3px;
+  }
+
+  .message-content::-webkit-scrollbar-track {
+    background-color: transparent;
   }
   
   /* New styles for Markdown formatting */
@@ -241,4 +271,32 @@
 
   .append-button {
     margin-top: 5px;
+  }
+
+  .message {
+    transition: max-height 0.3s ease;
+  }
+
+  .message-text {
+    max-height: 200px; /* Default max height for messages */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding-right: 10px; /* Space for scrollbar */
+    transition: max-height 0.3s ease;
+  }
+
+  .message.expanded .message-text {
+    max-height: none; /* Remove max height when expanded */
+  }
+
+  .message-text::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .message-text::-webkit-scrollbar-thumb {
+    background-color: #5f6368;
+    border-radius: 3px;
+  }
+
+  .message-text::-webkit-scrollbar-track {
+    background-color: transparent;
   }
