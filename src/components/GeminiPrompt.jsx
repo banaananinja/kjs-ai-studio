@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { generateChatResponse } from '../services/geminiService';
 import './GeminiPrompt.css';
 
-function GeminiPrompt({ selectedModel }) {
+function GeminiPrompt({ selectedModel, systemInstructions }) {
   const [messages, setMessages] = useState([]);
   const [currentPrompt, setCurrentPrompt] = useState('');
   const [loading, setLoading] = useState(false);
@@ -20,8 +20,8 @@ function GeminiPrompt({ selectedModel }) {
     setLoading(true);
 
     try {
-      // Send full conversation along with selected model code to Gemini
-      const replyText = await generateChatResponse(newMessages, selectedModel);
+      // Send full conversation along with selected model code and system instructions
+      const replyText = await generateChatResponse(newMessages, selectedModel, systemInstructions);
       const assistantMessage = { role: 'assistant', content: replyText };
       setMessages(prev => [...prev, assistantMessage]);
     } catch (error) {

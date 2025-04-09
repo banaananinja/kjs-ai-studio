@@ -5,5 +5,34 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-  }
-  
+}
+
+.system-instructions-container {
+  margin-bottom: 20px;
+  width: 100%;
+  padding: 10px;
+}
+
+.system-instructions-container label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+}
+
+.system-instructions-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 14px;
+  resize: vertical;
+}
+
+.instructions-help {
+  margin-top: 5px;
+  font-size: 12px;
+  color: #666;
+  font-style: italic;
+}
