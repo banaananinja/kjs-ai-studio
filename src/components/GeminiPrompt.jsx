@@ -38,6 +38,42 @@ function GeminiPrompt({ selectedModel, systemInstructions }) {
   const cancelMessageEdit = () => {
     setEditingMessageId(null);
   };
+  
+  const handleRegenerateMessage = async (index) => {
+    let conversationToKeep;
+    
+    if (messages[index].role === 'assistant') {
+      // For assistant messages, find the last user message before this one
+      let lastUserMessageIndex = index - 1;
+      while (lastUserMessageIndex >= 0 && messages[lastUserMessageIndex].role !== 'user') {
+        lastUserMessageIndex--;
+      }
+      
+      if (lastUserMessageIndex < 0) return; // No user message found
+      
+      // Keep messages up to the user message that triggered this response
+      conversationToKeep = messages.slice(0, lastUserMessageIndex + 1);
+    } else if (messages[index].role === 'user') {
+      // For user messages, keep messages up to and including the clicked message
+      conversationToKeep = messages.slice(0, index + 1);
+    }
+    
+    // Update messages to remove everything after the relevant point
+    setMessages(conversationToKeep);
+    setLoading(true);
+    
+    try {
+      // Generate new response based on the conversation up to this point
+      const replyText = await generateChatResponse(conversationToKeep, selectedModel, systemInstructions);
+      const assistantMessage = { role: 'assistant', content: replyText };
+      setMessages(prev => [...prev, assistantMessage]);
+    } catch (error) {
+      const errorMessage = { role: 'assistant', content: 'Error: Unable to regenerate response from Gemini API' };
+      setMessages(prev => [...prev, errorMessage]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -83,12 +119,11 @@ function GeminiPrompt({ selectedModel, systemInstructions }) {
                     {expandedMessages[index] ? '➖' : '➕'}
                   </button>
                   <button onClick={() => startEditingMessage(index, msg.content)}>✏️</button>
-                  <button>💎</button>
-                  <button>🍔</button>
+                  <button onClick={() => handleRegenerateMessage(index)}>💎</button>
                 </>
               )}
             </div>
-            <strong className="message-sender">{msg.role === 'assistant' ? 'Gemini' : 'You'}:</strong> 
+            <strong className="message-sender">{msg.role === 'assistant' ? 'Gemini' : 'You'}:</strong>
             <div className="message-content">
               {editingMessageId === index ? (
                 <textarea
