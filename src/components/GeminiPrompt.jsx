@@ -66,10 +66,29 @@ function GeminiPrompt({ selectedModel, systemInstructions }) {
           onChange={(e) => setCurrentPrompt(e.target.value)}
           placeholder="Enter your prompt here..."
           rows={2}
+          onKeyDown={(e) => {
+            if (e.ctrlKey && e.key === 'Enter') {
+              e.preventDefault();
+              handleSubmit(e);
+            }
+          }}
         />
-        <button type="submit" disabled={loading || !currentPrompt}>
-          {loading ? 'Generating...' : 'Send'}
-        </button>
+        <div className="button-container">
+          <button 
+            type="button" 
+            disabled={loading || !currentPrompt}
+            title="ALT+ENTER"
+          >
+            Append
+          </button>
+          <button 
+            type="submit" 
+            disabled={loading || !currentPrompt}
+            title="CTRL+ENTER"
+          >
+            {loading ? 'Generating...' : 'Run'}
+          </button>
+        </div>
       </form>
     </div>
   );
