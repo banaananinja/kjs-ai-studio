@@ -1,0 +1,17 @@
+/* src/App.css */
+.App {
+  display: flex;
+  height: 100vh;               /* Full viewport height */
+  background-color: #202124;
+  color: #e8eaed;
+  margin: 0;
+  padding: 0;
+}
+
+.main-area {
+  flex: 1;                     /* Takes up remaining width */
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}

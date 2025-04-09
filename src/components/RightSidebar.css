@@ -1,0 +1,38 @@
+/* src/components/RightSidebar.css */
+.right-sidebar {
+    width: 25%;
+    background-color: #303134;
+    padding: 20px;
+    box-sizing: border-box;
+    color: #e8eaed;
+  }
+  
+  .model-selector {
+    margin-bottom: 20px;
+  }
+  
+  .token-count {
+    margin-bottom: 20px;
+  }
+  
+  .temperature-slider {
+    margin-bottom: 20px;
+  }
+  
+  .tools-dropdown,
+  .advanced-settings {
+    margin-bottom: 20px;
+    position: relative;
+  }
+  
+  .dropdown-menu {
+    list-style: none;
+    padding: 10px;
+    background-color: #202124;
+    border: 1px solid #5f6368;
+    position: absolute;
+    top: 35px;
+    left: 0;
+    width: 100%;
+  }
+  

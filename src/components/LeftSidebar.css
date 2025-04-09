@@ -1,0 +1,23 @@
+/* src/components/LeftSidebar.css */
+.left-sidebar {
+    width: 15%;
+    background-color: #303134;
+    padding: 20px;
+    box-sizing: border-box;
+    color: #e8eaed;
+  }
+  
+  .left-sidebar h2 {
+    margin-top: 0;
+  }
+  
+  .left-sidebar ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .left-sidebar ul li {
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  
