@@ -11,12 +11,32 @@ function GeminiPrompt({ selectedModel, systemInstructions }) {
   const [currentPrompt, setCurrentPrompt] = useState('');
   const [loading, setLoading] = useState(false);
   const [expandedMessages, setExpandedMessages] = useState({});
+  const [editingMessageId, setEditingMessageId] = useState(null);
+  const [editingContent, setEditingContent] = useState('');
 
   const toggleMessageExpansion = (messageId) => {
     setExpandedMessages(prev => ({
       ...prev,
       [messageId]: !prev[messageId]
     }));
+  };
+
+  const startEditingMessage = (index, content) => {
+    setEditingMessageId(index);
+    setEditingContent(content);
+  };
+
+  const saveMessageEdit = () => {
+    setMessages(prevMessages => 
+      prevMessages.map((msg, index) => 
+        index === editingMessageId ? { ...msg, content: editingContent } : msg
+      )
+    );
+    setEditingMessageId(null);
+  };
+
+  const cancelMessageEdit = () => {
+    setEditingMessageId(null);
   };
 
   const handleSubmit = async (e) => {
@@ -49,26 +69,44 @@ function GeminiPrompt({ selectedModel, systemInstructions }) {
         {messages.map((msg, index) => (
           <div 
             key={index} 
-            className={`message-bubble ${msg.role} ${expandedMessages[index] ? 'expanded' : ''}`}
+            className={`message-bubble ${msg.role} ${expandedMessages[index] ? 'expanded' : ''} ${editingMessageId === index ? 'editing' : ''}`}
           >
             <div className="message-actions">
-              <button onClick={() => toggleMessageExpansion(index)}>
-                {expandedMessages[index] ? '➖' : '➕'}
-              </button>
-              <button>✏️</button>
-              <button>💎</button>
-              <button>🍔</button>
+              {editingMessageId === index ? (
+                <>
+                  <button onClick={saveMessageEdit} className="edit-action-button save">✔️</button>
+                  <button onClick={cancelMessageEdit} className="edit-action-button cancel">❌</button>
+                </>
+              ) : (
+                <>
+                  <button onClick={() => toggleMessageExpansion(index)}>
+                    {expandedMessages[index] ? '➖' : '➕'}
+                  </button>
+                  <button onClick={() => startEditingMessage(index, msg.content)}>✏️</button>
+                  <button>💎</button>
+                  <button>🍔</button>
+                </>
+              )}
             </div>
             <strong className="message-sender">{msg.role === 'assistant' ? 'Gemini' : 'You'}:</strong> 
             <div className="message-content">
-              <div className="markdown-content">
-                <ReactMarkdown 
-                  rehypePlugins={[rehypeHighlight]}
-                  remarkPlugins={[remarkGfm]}
-                >
-                  {msg.content}
-                </ReactMarkdown>
-              </div>
+              {editingMessageId === index ? (
+                <textarea
+                  className="edit-message-textarea"
+                  value={editingContent}
+                  onChange={(e) => setEditingContent(e.target.value)}
+                  rows={5}
+                />
+              ) : (
+                <div className="markdown-content">
+                  <ReactMarkdown 
+                    rehypePlugins={[rehypeHighlight]}
+                    remarkPlugins={[remarkGfm]}
+                  >
+                    {msg.content}
+                  </ReactMarkdown>
+                </div>
+              )}
             </div>
           </div>
         ))}

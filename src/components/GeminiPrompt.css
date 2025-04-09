@@ -54,6 +54,55 @@
     max-height: none; /* Remove max height for content when expanded */
   }
 
+  /* New styles for editing state */
+  .message-bubble.editing {
+    max-height: none; /* Always expanded when editing */
+  }
+
+  .message-bubble.editing .message-content {
+    max-height: none; /* No height restriction when editing */
+  }
+
+  .edit-message-textarea {
+    width: 100%;
+    min-height: 100px;
+    background-color: #383838;
+    color: #e8eaed;
+    border: 1px solid #5f6368;
+    border-radius: 4px;
+    padding: 8px;
+    font-family: inherit;
+    font-size: inherit;
+    resize: vertical;
+    outline: none;
+  }
+
+  .edit-message-textarea:focus {
+    border-color: #8ab4f8;
+  }
+
+  /* Style for edit action buttons */
+  .edit-action-button {
+    padding: 2px 5px;
+    margin-left: 3px;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .edit-action-button.save {
+    color: #81c995; /* Green for save */
+  }
+
+  .edit-action-button.cancel {
+    color: #f28b82; /* Red for cancel */
+  }
+
+  .edit-action-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+  }
+
   .message-content::-webkit-scrollbar {
     width: 6px;
   }
