@@ -3,18 +3,15 @@ import React, { useState } from 'react';
 import './App.css';
 import LeftSidebar from './components/LeftSidebar';
 import RightSidebar from './components/RightSidebar';
-import GeminiPrompt from './components/GeminiPrompt';
+import MainArea from './components/MainArea';
 
 function App() {
-  // Default model (you can update this later via the drop-down)
   const [selectedModel, setSelectedModel] = useState("gemini-2.0-flash-lite");
 
   return (
     <div className="App">
       <LeftSidebar />
-      <div className="main-area">
-        <GeminiPrompt selectedModel={selectedModel} />
-      </div>
+      <MainArea selectedModel={selectedModel} />
       <RightSidebar selectedModel={selectedModel} setSelectedModel={setSelectedModel} />
     </div>
   );
