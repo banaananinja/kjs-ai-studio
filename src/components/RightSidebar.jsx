@@ -7,6 +7,11 @@ function RightSidebar({ selectedModel, setSelectedModel, temperature = 0.7, setT
   const [toolsOpen, setToolsOpen] = useState(false);
   const [advancedOpen, setAdvancedOpen] = useState(false);
 
+  // Add state variables for advanced parameters
+  const [outputLength, setOutputLength] = useState('');
+  const [stopSequences, setStopSequences] = useState('');
+  const [topP, setTopP] = useState(0.8);
+
   const models = [
     { name: "Gemini 2.5 Pro Preview", code: "gemini-2.5-pro-preview-03-25" },
     { name: "Gemini 2.0 Flash", code: "gemini-2.0-flash" },
@@ -26,6 +31,19 @@ function RightSidebar({ selectedModel, setSelectedModel, temperature = 0.7, setT
     if (setTemperature) {
       setTemperature(newValue);
     }
+  };
+
+  // Add handlers for advanced parameters
+  const handleOutputLengthChange = (e) => {
+    setOutputLength(e.target.value);
+  };
+
+  const handleStopSequencesChange = (e) => {
+    setStopSequences(e.target.value);
+  };
+
+  const handleTopPChange = (e) => {
+    setTopP(parseFloat(e.target.value));
   };
 
   // Keep local state in sync with props
@@ -52,19 +70,19 @@ function RightSidebar({ selectedModel, setSelectedModel, temperature = 0.7, setT
       </div>
 
       {/* Temperature slider */}
-      <div className="temperature-control">
-        <div className="control-header">
-          <label htmlFor="temperature-slider">Temperature: {tempValue.toFixed(1)}</label>
+      <div className="slider-container">
+        <div className="label-with-value">
+          <label>Temperature:</label>
+          <span className="slider-value">{tempValue.toFixed(2)}</span>
         </div>
         <input
-          id="temperature-slider"
           type="range"
           min="0"
-          max="1"
-          step="0.1"
+          max="2"
+          step="0.05"
           value={tempValue}
           onChange={handleTemperatureChange}
-          className="temperature-slider"
+          className="slider"
         />
         <div className="slider-labels">
           <span>Precise</span>
@@ -98,17 +116,38 @@ function RightSidebar({ selectedModel, setSelectedModel, temperature = 0.7, setT
         {advancedOpen && (
           <ul className="dropdown-menu">
             <div className="advanced-content">
-              <div className="output-length">
+              <div className="input-container">
                 <label>Output Length:</label>
-                <input type="number" placeholder="Enter length" />
+                <input 
+                  type="text" 
+                  value={outputLength} 
+                  onChange={handleOutputLengthChange} 
+                  className="dark-input"
+                />
               </div>
-              <div className="stop-sequences">
+              <div className="input-container">
                 <label>Stop Sequences:</label>
-                <input type="text" placeholder="Comma separated" />
+                <input 
+                  type="text" 
+                  value={stopSequences} 
+                  onChange={handleStopSequencesChange} 
+                  className="dark-input"
+                />
               </div>
-              <div className="top-p">
-                <label>Top P:</label>
-                <input type="range" min="0" max="1" step="0.01" />
+              <div className="slider-container">
+                <div className="label-with-value">
+                  <label>Top P:</label>
+                  <span className="slider-value">{topP.toFixed(2)}</span>
+                </div>
+                <input
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.05"
+                  value={topP}
+                  onChange={handleTopPChange}
+                  className="slider"
+                />
               </div>
             </div>
           </ul>

@@ -186,3 +186,79 @@ select:hover {
   font-size: 12px;
   color: #aaa;
 }
+
+.slider-container {
+  margin-bottom: 15px;
+}
+
+.slider {
+  width: 100%;
+  height: 8px;
+  background: #444;
+  border-radius: 4px;
+  appearance: none;
+  outline: none;
+  margin: 10px 0;
+}
+
+.slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: #4d7eff;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: #4d7eff;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+}
+
+.slider-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #aaa;
+  margin-top: 5px;
+}
+
+.label-with-value {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.slider-value {
+  color: #4d7eff;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* Dark mode input styling */
+.dark-input {
+  width: 95%;
+  padding: 10px 12px;
+  border: 1px solid #555;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+  font-family: inherit;
+  background-color: #333;
+  color: #e0e0e0;
+}
+
+.dark-input:focus {
+  border-color: #4d7eff;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(77, 126, 255, 0.3);
+}
+
+.input-container {
+  margin-bottom: 15px;
+}
