@@ -6,6 +6,13 @@ import remarkGfm from 'remark-gfm';
 import { generateChatResponse } from '../services/geminiService';
 import './GeminiPrompt.css';
 
+/**
+ * GeminiPrompt Component - Handles chat interface for Gemini AI model interactions
+ * 
+ * @param {Object} props - Component props
+ * @param {string} props.selectedModel - The currently selected Gemini model
+ * @param {string} props.systemInstructions - System instructions to guide the AI's behavior
+ */
 function GeminiPrompt({ selectedModel, systemInstructions }) {
   const [messages, setMessages] = useState([]);
   const [currentPrompt, setCurrentPrompt] = useState('');
@@ -14,7 +21,22 @@ function GeminiPrompt({ selectedModel, systemInstructions }) {
   const [editingMessageId, setEditingMessageId] = useState(null);
   const [editingContent, setEditingContent] = useState('');
   const [activeDropdown, setActiveDropdown] = useState(null);
+  const chatHistoryRef = useRef(null);
 
+  /**
+   * Scroll chat history container to the bottom when messages change
+   */
+  useEffect(() => {
+    if (chatHistoryRef.current) {
+      // Scroll to the bottom of the chat container instead of the whole page
+      chatHistoryRef.current.scrollTop = chatHistoryRef.current.scrollHeight;
+    }
+  }, [messages]);
+
+  /**
+   * Toggles the expansion state of a message
+   * @param {number} messageId - Index of the message to toggle
+   */
   const toggleMessageExpansion = (messageId) => {
     setExpandedMessages(prev => ({
       ...prev,
@@ -22,11 +44,19 @@ function GeminiPrompt({ selectedModel, systemInstructions }) {
     }));
   };
 
+  /**
+   * Initiates editing mode for a specific message
+   * @param {number} index - Index of the message to edit
+   * @param {string} content - Current content of the message
+   */
   const startEditingMessage = (index, content) => {
     setEditingMessageId(index);
     setEditingContent(content);
   };
 
+  /**
+   * Saves the edited message content
+   */
   const saveMessageEdit = () => {
     setMessages(prevMessages => 
       prevMessages.map((msg, index) => 
@@ -36,17 +66,25 @@ function GeminiPrompt({ selectedModel, systemInstructions }) {
     setEditingMessageId(null);
   };
 
+  /**
+   * Cancels the current message edit operation
+   */
   const cancelMessageEdit = () => {
     setEditingMessageId(null);
   };
   
+  /**
+   * Toggles the dropdown menu for a message
+   * @param {number} index - Index of the message to toggle dropdown for
+   * @param {Event} e - Click event that triggered the toggle
+   */
   const toggleDropdown = (index, e) => {
     e.stopPropagation();
     
-    if (activeDropdown === index) {
+    if (activeDropdown && activeDropdown.index === index) {
       setActiveDropdown(null);
     } else {
-      // Calculate position for the dropdown
+      // Calculate position for the dropdown based on the button's position
       const buttonRect = e.currentTarget.getBoundingClientRect();
       const dropdownPosition = {
         top: buttonRect.bottom + 5,
@@ -71,22 +109,42 @@ function GeminiPrompt({ selectedModel, systemInstructions }) {
     };
   }, []);
   
+  /**
+   * Deletes a message from the conversation
+   * @param {number} index - Index of the message to delete
+   */
   const handleDeleteMessage = (index) => {
     setMessages(prevMessages => prevMessages.filter((_, i) => i !== index));
     setActiveDropdown(null);
   };
 
-  const handleCopyText = (content) => {
+  /**
+   * Copies message content to clipboard
+   * @param {string} content - Content to copy
+   * @param {string} [format='text'] - Format to copy (text or markdown)
+   */
+  const copyToClipboard = (content, format = 'text') => {
     navigator.clipboard.writeText(content);
     setActiveDropdown(null);
+    // Could show a toast notification here in the future
   };
 
-  const handleCopyMarkdown = (content) => {
-    // Copy the raw markdown content
-    navigator.clipboard.writeText(content);
-    setActiveDropdown(null);
-  };
+  /**
+   * Copies plain text content to clipboard
+   * @param {string} content - Text content to copy
+   */
+  const handleCopyText = (content) => copyToClipboard(content);
+
+  /**
+   * Copies markdown content to clipboard
+   * @param {string} content - Markdown content to copy
+   */
+  const handleCopyMarkdown = (content) => copyToClipboard(content);
   
+  /**
+   * Regenerates an AI response for a given message
+   * @param {number} index - Index of the message to regenerate a response for
+   */
   const handleRegenerateMessage = async (index) => {
     let conversationToKeep;
     
@@ -123,6 +181,10 @@ function GeminiPrompt({ selectedModel, systemInstructions }) {
     }
   };
 
+  /**
+   * Handles the submission of a new prompt
+   * @param {Event} e - Form submission event
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!currentPrompt.trim()) return;
@@ -147,9 +209,21 @@ function GeminiPrompt({ selectedModel, systemInstructions }) {
     }
   };
 
+  /**
+   * Appends the current prompt to the conversation without generating a response
+   */
+  const handleAppend = () => {
+    if (!currentPrompt.trim()) return;
+    
+    // Add user's message without generating a response
+    const userMessage = { role: 'user', content: currentPrompt.trim() };
+    setMessages(prev => [...prev, userMessage]);
+    setCurrentPrompt('');
+  };
+
   return (
     <div className="gemini-prompt">
-      <div className="chat-history">
+      <div className="chat-history" ref={chatHistoryRef}>
         {messages.map((msg, index) => (
           <div 
             key={index} 
@@ -218,6 +292,9 @@ function GeminiPrompt({ selectedModel, systemInstructions }) {
               if (e.ctrlKey && e.key === 'Enter') {
                 e.preventDefault();
                 handleSubmit(e);
+              } else if (e.altKey && e.key === 'Enter') {
+                e.preventDefault();
+                handleAppend();
               }
             }}
             className="prompt-textarea"
@@ -234,6 +311,7 @@ function GeminiPrompt({ selectedModel, systemInstructions }) {
             </button>
             <button 
               type="button" 
+              onClick={handleAppend}
               disabled={loading || !currentPrompt}
               title="ALT+ENTER"
               className="append-button"

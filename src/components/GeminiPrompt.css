@@ -10,14 +10,17 @@
     box-sizing: border-box;
     min-height: 600px;
     height: 100%;
+    overflow: hidden; /* Prevent scrolling at this level */
   }
   
   .chat-history {
     flex: 1;                /* Expands to fill available space above form */
     overflow-y: auto;
-    padding: 20px;
+    padding: 16px;
     min-height: 0;
     padding-bottom: 8px;
+    /* Ensure fixed height calculation within the container */
+    height: calc(100% - 80px); /* Adjust based on your input container height */
   }
   
   .message-bubble {
