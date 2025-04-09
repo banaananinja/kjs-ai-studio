@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import rehypeHighlight from 'rehype-highlight';
+import remarkGfm from 'remark-gfm';
 import { generateChatResponse } from '../services/geminiService';
 import './GeminiPrompt.css';
 
@@ -39,11 +40,18 @@ function GeminiPrompt({ selectedModel, systemInstructions }) {
       <div className="chat-history">
         {messages.map((msg, index) => (
           <div key={index} className={`message-bubble ${msg.role}`}>
+            <div className="message-actions">
+              <button>➕</button>
+              <button>✏️</button>
+              <button>💎</button>
+              <button>🍔</button>
+            </div>
             <strong className="message-sender">{msg.role === 'assistant' ? 'Gemini' : 'You'}:</strong> 
             <div className="message-content">
               <div className="markdown-content">
                 <ReactMarkdown 
                   rehypePlugins={[rehypeHighlight]}
+                  remarkPlugins={[remarkGfm]}
                 >
                   {msg.content}
                 </ReactMarkdown>

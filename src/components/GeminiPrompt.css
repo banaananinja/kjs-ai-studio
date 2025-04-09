@@ -24,6 +24,7 @@
     margin-bottom: 10px;
     padding: 10px;
     border-radius: 4px;
+    position: relative;
   }
   
   .message-bubble.user {
@@ -181,4 +182,25 @@
     position: sticky;
     bottom: 0;
     background-color: inherit; /* Match parent background */
+  }
+
+  .message-actions {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    display: flex;
+    gap: 5px;
+  }
+
+  .message-actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 2px 5px;
+    border-radius: 3px;
+  }
+
+  .message-actions button:hover {
+    background-color: rgba(0, 0, 0, 0.1);
   }
