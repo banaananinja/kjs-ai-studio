@@ -13,7 +13,7 @@ function RightSidebar({ selectedModel, setSelectedModel, temperature = 1, setTem
   const [topP, setTopP] = useState(0.95);
 
   const models = [
-    { name: "Gemini 2.5 Pro Preview", code: "gemini-2.5-pro-preview-03-25" },
+    { name: "Gemini 2.5 Pro Experimental", code: "gemini-2.5-pro-exp-03-25" },
     { name: "Gemini 2.0 Flash", code: "gemini-2.0-flash" },
     { name: "Gemini 2.0 Flash-Lite", code: "gemini-2.0-flash-lite" },
     { name: "Gemini 1.5 Flash", code: "gemini-1.5-flash" },

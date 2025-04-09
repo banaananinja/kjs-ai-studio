@@ -60,34 +60,40 @@ function GeminiPrompt({ selectedModel, systemInstructions }) {
           </div>
         ))}
       </div>
-      <form onSubmit={handleSubmit}>
-        <textarea
-          value={currentPrompt}
-          onChange={(e) => setCurrentPrompt(e.target.value)}
-          placeholder="Enter your prompt here..."
-          rows={2}
-          onKeyDown={(e) => {
-            if (e.ctrlKey && e.key === 'Enter') {
-              e.preventDefault();
-              handleSubmit(e);
-            }
-          }}
-        />
-        <div className="button-container">
-          <button 
-            type="button" 
-            disabled={loading || !currentPrompt}
-            title="ALT+ENTER"
-          >
-            Append
-          </button>
-          <button 
-            type="submit" 
-            disabled={loading || !currentPrompt}
-            title="CTRL+ENTER"
-          >
-            {loading ? 'Generating...' : 'Run'}
-          </button>
+      <form onSubmit={handleSubmit} className="prompt-form">
+        <div className="input-container">
+          <textarea
+            value={currentPrompt}
+            onChange={(e) => setCurrentPrompt(e.target.value)}
+            placeholder="Enter your prompt here..."
+            rows={2}
+            onKeyDown={(e) => {
+              if (e.ctrlKey && e.key === 'Enter') {
+                e.preventDefault();
+                handleSubmit(e);
+              }
+            }}
+            className="prompt-textarea"
+          />
+          
+          <div className="side-buttons">
+            <button 
+              type="submit" 
+              disabled={loading || !currentPrompt}
+              title="CTRL+ENTER"
+              className="run-button"
+            >
+              {loading ? 'Generating...' : 'Run'}
+            </button>
+            <button 
+              type="button" 
+              disabled={loading || !currentPrompt}
+              title="ALT+ENTER"
+              className="append-button"
+            >
+              Append
+            </button>
+          </div>
         </div>
       </form>
     </div>

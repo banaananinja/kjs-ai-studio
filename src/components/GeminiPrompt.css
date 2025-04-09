@@ -146,7 +146,7 @@
   form {
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding: 20px 20px 10px 20px; /* Reduced bottom padding from 20px to 10px */
     border-top: 1px solid #3c4043;
   }
   
@@ -203,4 +203,42 @@
 
   .message-actions button:hover {
     background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  /* Add these styles to your existing CSS file */
+
+  .prompt-form {
+    width: 100%;
+  }
+
+  .input-container {
+    display: flex;
+    gap: 10px;
+  }
+
+  .prompt-textarea {
+    flex: 1;
+    max-width: calc(100% - 180px); /* Increased space for buttons from 160px to 180px */
+    min-height: 80px; /* Set a minimum height for the textarea */
+    height: auto; /* Allow it to grow beyond minimum height if needed */
+  }
+
+  .side-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .run-button {
+    background-color: #1a73e8;
+    color: white;
+    width: 120px; /* Fixed width to accommodate "Generating..." text */
+  }
+
+  .run-button:hover:not(:disabled) {
+    background-color: #0d66da;
+  }
+
+  .append-button {
+    margin-top: 5px;
   }
