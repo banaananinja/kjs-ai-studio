@@ -66,11 +66,11 @@
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
-  color: #333;
+  color: #fff;  /* Changed from #333 to white */
 }
 
 .system-instructions-input {
-  width: 100%;
+  width: 95%;  /* Changed from 100% to 95% to make it less wide */
   padding: 10px 12px;
   border: 1px solid #555;
   border-radius: 8px;

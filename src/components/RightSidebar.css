@@ -1,38 +1,188 @@
 /* src/components/RightSidebar.css */
+
+/* Right Sidebar Styles */
 .right-sidebar {
-    width: 25%;
-    background-color: #303134;
-    padding: 20px;
-    box-sizing: border-box;
-    color: #e8eaed;
-  }
-  
-  .model-selector {
-    margin-bottom: 20px;
-  }
-  
-  .token-count {
-    margin-bottom: 20px;
-  }
-  
-  .temperature-slider {
-    margin-bottom: 20px;
-  }
-  
-  .tools-dropdown,
-  .advanced-settings {
-    margin-bottom: 20px;
-    position: relative;
-  }
-  
-  .dropdown-menu {
-    list-style: none;
-    padding: 10px;
-    background-color: #202124;
-    border: 1px solid #5f6368;
-    position: absolute;
-    top: 35px;
-    left: 0;
-    width: 100%;
-  }
-  
+  background-color: #2d2d2d;
+  border-left: 1px solid #444;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 250px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+/* Model Selector Styles */
+.model-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.model-selector label {
+  font-weight: 600;
+  font-size: 14px;
+  color: #e0e0e0;
+}
+
+select {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #555;
+  background-color: #333;
+  color: #e0e0e0;
+  font-size: 14px;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+select:focus {
+  outline: none;
+  border-color: #4d7eff;
+  box-shadow: 0 0 0 2px rgba(77, 126, 255, 0.3);
+}
+
+select:hover {
+  border-color: #666;
+}
+
+/* Dropdown Menus */
+.dropdown-section {
+  margin-bottom: 16px;
+}
+
+.dropdown-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #333;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-title:hover {
+  background-color: #3a3a3a;
+}
+
+.dropdown-title span {
+  font-weight: 600;
+  color: #e0e0e0;
+}
+
+.dropdown-menu {
+  list-style-type: none;
+  padding: 8px 0;
+  margin: 4px 0 0;
+  background-color: #333;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #444;
+}
+
+.dropdown-menu li {
+  padding: 8px 12px;
+  cursor: pointer;
+  color: #e0e0e0;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-menu li:hover {
+  background-color: #444;
+}
+
+/* Tools and Advanced Settings sections */
+.tools-dropdown, .advanced-settings {
+  margin-top: 8px;
+}
+
+.section-header {
+  font-weight: 600;
+  font-size: 14px;
+  color: #e0e0e0;
+  margin-bottom: 8px;
+}
+
+/* Additional styling for toggle switches or other controls */
+.toggle-switch {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+}
+
+.toggle-switch label {
+  color: #e0e0e0;
+  font-size: 14px;
+}
+
+/* Temperature Slider Styles */
+.temperature-control {
+  display: flex;
+  flex-direction: column;
+  margin: 16px 0;
+  padding: 10px;
+  background-color: #333;
+  border-radius: 8px;
+  border: 1px solid #444;
+}
+
+.control-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.control-header label {
+  font-weight: 600;
+  font-size: 14px;
+  color: #e0e0e0;
+}
+
+.temperature-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  background: linear-gradient(to right, #4080ff, #80c0ff);
+  border-radius: 3px;
+  outline: none;
+}
+
+.temperature-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ffffff;
+  cursor: pointer;
+  border: 2px solid #4080ff;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+}
+
+.temperature-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ffffff;
+  cursor: pointer;
+  border: 2px solid #4080ff;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+}
+
+.slider-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-size: 12px;
+  color: #aaa;
+}

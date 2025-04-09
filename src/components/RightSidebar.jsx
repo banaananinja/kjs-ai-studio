@@ -1,8 +1,12 @@
 // src/components/RightSidebar.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './RightSidebar.css';
 
-function RightSidebar({ selectedModel, setSelectedModel }) {
+function RightSidebar({ selectedModel, setSelectedModel, temperature = 0.7, setTemperature }) {
+  // Define state variables for dropdown toggles
+  const [toolsOpen, setToolsOpen] = useState(false);
+  const [advancedOpen, setAdvancedOpen] = useState(false);
+
   const models = [
     { name: "Gemini 2.5 Pro Preview", code: "gemini-2.5-pro-preview-03-25" },
     { name: "Gemini 2.0 Flash", code: "gemini-2.0-flash" },
@@ -12,8 +16,22 @@ function RightSidebar({ selectedModel, setSelectedModel }) {
     { name: "Gemini 1.5 Pro", code: "gemini-1.5-pro" },
   ];
 
-  const [toolsOpen, setToolsOpen] = useState(false);
-  const [advancedOpen, setAdvancedOpen] = useState(false);
+  // Local temperature state that syncs with parent
+  const [tempValue, setTempValue] = useState(temperature);
+
+  // Update parent component when slider changes
+  const handleTemperatureChange = (e) => {
+    const newValue = parseFloat(e.target.value);
+    setTempValue(newValue);
+    if (setTemperature) {
+      setTemperature(newValue);
+    }
+  };
+
+  // Keep local state in sync with props
+  useEffect(() => {
+    setTempValue(temperature);
+  }, [temperature]);
 
   return (
     <div className="right-sidebar">
@@ -33,19 +51,35 @@ function RightSidebar({ selectedModel, setSelectedModel }) {
         </select>
       </div>
 
-      <div className="token-count">
-        <p>Token Count: 0</p>
-      </div>
-
-      <div className="temperature-slider">
-        <label htmlFor="temperature">Temperature:</label>
-        {/* Set slider range 0 to 2 if mimicking Google AI Studio */}
-        <input type="range" id="temperature" min="0" max="2" step="0.01" />
+      {/* Temperature slider */}
+      <div className="temperature-control">
+        <div className="control-header">
+          <label htmlFor="temperature-slider">Temperature: {tempValue.toFixed(1)}</label>
+        </div>
+        <input
+          id="temperature-slider"
+          type="range"
+          min="0"
+          max="1"
+          step="0.1"
+          value={tempValue}
+          onChange={handleTemperatureChange}
+          className="temperature-slider"
+        />
+        <div className="slider-labels">
+          <span>Precise</span>
+          <span>Balanced</span>
+          <span>Creative</span>
+        </div>
       </div>
 
       {/* Tools dropdown */}
-      <div className="tools-dropdown">
-        <button onClick={() => setToolsOpen(!toolsOpen)}>Tools ▼</button>
+      <div className="dropdown-section">
+        <div className="section-header">Tools</div>
+        <div className="dropdown-title" onClick={() => setToolsOpen(!toolsOpen)}>
+          <span>Available Tools</span>
+          <span>{toolsOpen ? '▲' : '▼'}</span>
+        </div>
         {toolsOpen && (
           <ul className="dropdown-menu">
             <li>Tool 1 (coming soon)</li>
@@ -55,25 +89,33 @@ function RightSidebar({ selectedModel, setSelectedModel }) {
       </div>
 
       {/* Advanced settings dropdown */}
-      <div className="advanced-settings">
-        <button onClick={() => setAdvancedOpen(!advancedOpen)}>Advanced Settings ▼</button>
+      <div className="dropdown-section">
+        <div className="section-header">Advanced Settings</div>
+        <div className="dropdown-title" onClick={() => setAdvancedOpen(!advancedOpen)}>
+          <span>Parameters</span>
+          <span>{advancedOpen ? '▲' : '▼'}</span>
+        </div>
         {advancedOpen && (
-          <div className="advanced-content">
-            <div className="output-length">
-              <label>Output Length:</label>
-              <input type="number" placeholder="Enter length" />
+          <ul className="dropdown-menu">
+            <div className="advanced-content">
+              <div className="output-length">
+                <label>Output Length:</label>
+                <input type="number" placeholder="Enter length" />
+              </div>
+              <div className="stop-sequences">
+                <label>Stop Sequences:</label>
+                <input type="text" placeholder="Comma separated" />
+              </div>
+              <div className="top-p">
+                <label>Top P:</label>
+                <input type="range" min="0" max="1" step="0.01" />
+              </div>
             </div>
-            <div className="stop-sequences">
-              <label>Stop Sequences:</label>
-              <input type="text" placeholder="Comma separated" />
-            </div>
-            <div className="top-p">
-              <label>Top P:</label>
-              <input type="range" min="0" max="1" step="0.01" />
-            </div>
-          </div>
+          </ul>
         )}
       </div>
+
+      {/* You can add more settings sections as needed */}
     </div>
   );
 }
