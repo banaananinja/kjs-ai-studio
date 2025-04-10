@@ -4,11 +4,15 @@
 .main-area-container {
   display: flex;
   flex-direction: column;
-  height: 100%; /* Ensure it fills parent */
+  height: 100%; /* Ensure it fills parent height */
   overflow: hidden; /* Prevent container scroll */
   background-color: #202124;
   color: #e8eaed;
   padding: 0; /* Remove padding from container, add to children */
+  /* --- Fix for Layout Expansion --- */
+  flex: 1; /* Allow this column to grow and fill remaining horizontal space */
+  min-width: 0; /* Prevent content from pushing container too wide in flex */
+  /* --- End Fix --- */
 }
 
 /* System Instructions */
@@ -90,7 +94,7 @@
 
 /* Chat History Area */
 .chat-history {
-  flex: 1; /* Grow to fill space */
+  flex: 1; /* Grow to fill vertical space within MainArea */
   overflow-y: auto; /* Enable scrolling for messages */
   padding: 20px;
   min-height: 0; /* Important for flexbox scrolling */

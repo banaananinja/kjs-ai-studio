@@ -1,7 +1,8 @@
 /* src/components/RightSidebar.css */
 
 .right-sidebar {
-  width: 280px; /* Slightly wider */
+  width: 280px; /* Fixed width */
+  flex-shrink: 0; /* Prevent sidebar from shrinking */
   background-color: #2d2d2d;
   border-left: 1px solid #444;
   padding: 20px;
@@ -20,539 +21,144 @@
 .right-sidebar::-webkit-scrollbar-thumb { background-color: #444; border-radius: 4px; border: 2px solid #2d2d2d; }
 .right-sidebar::-webkit-scrollbar-thumb:hover { background-color: #555; }
 
-
 /* Model Selector */
 .model-selector label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: 600;
-  font-size: 14px;
-  color: #e0e0e0;
+  display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; color: #e0e0e0;
 }
-
 .model-selector select {
-  width: 100%;
-  padding: 10px 12px;
-  border-radius: 8px;
-  border: 1px solid #555;
-  background-color: #333;
-  color: #e0e0e0;
-  font-size: 14px;
-  appearance: none;
+  width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid #555; background-color: #333; color: #e0e0e0; font-size: 14px; appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-  cursor: pointer;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  background-repeat: no-repeat; background-position: right 10px center; cursor: pointer; transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
-.model-selector select:focus {
-  outline: none;
-  border-color: #4d7eff;
-  box-shadow: 0 0 0 2px rgba(77, 126, 255, 0.3);
-}
+.model-selector select:focus { outline: none; border-color: #4d7eff; box-shadow: 0 0 0 2px rgba(77, 126, 255, 0.3); }
 .model-selector select:hover { border-color: #666; }
 
 /* Token Count Display */
-.token-count-display {
-  background-color: #333;
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: 1px solid #444;
-  font-size: 13px;
-  color: #aaa;
-  text-align: center;
-}
+.token-count-display { background-color: #333; padding: 8px 12px; border-radius: 8px; border: 1px solid #444; font-size: 13px; color: #aaa; text-align: center; }
 .token-count-display p { margin: 0; }
 
-
 /* Parameter Controls (Temp, TopP, Output Length) */
-.parameter-control {
-  padding: 12px;
-  background-color: #333;
-  border-radius: 8px;
-  border: 1px solid #444;
-  margin-bottom: 10px; /* Spacing within dropdown */
-}
-
-.parameter-control label {
-  font-weight: 600;
-  font-size: 14px;
-  color: #e0e0e0;
-  display: block; /* Ensure label takes full width */
-  margin-bottom: 8px; /* Space below label */
-}
-
-/* Combined Slider + Text Input styling */
-.label-input-group {
-  display: flex;
-  align-items: center;
-  justify-content: space-between; /* Push label and input apart */
-  margin-bottom: 8px;
-  gap: 10px;
-}
-
-.label-input-group label {
-  margin-bottom: 0; /* Remove margin when inline */
-  flex-shrink: 0; /* Prevent label from shrinking */
-}
-
+.parameter-control { padding: 12px; background-color: #333; border-radius: 8px; border: 1px solid #444; margin-bottom: 10px; }
+.parameter-control label { font-weight: 600; font-size: 14px; color: #e0e0e0; display: block; margin-bottom: 8px; }
+.label-input-group { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; gap: 10px; }
+.label-input-group label { margin-bottom: 0; flex-shrink: 0; }
 .value-input {
-  width: 65px; /* Fixed width for number input */
-  padding: 5px 8px;
-  background-color: #3a4a65; /* Dark blue */
-  color: #e8f0ff; /* Light blue-white */
-  border: 1px solid #555;
-  border-radius: 6px;
-  text-align: center;
-  font-size: 14px;
-  font-weight: 500;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-  -moz-appearance: textfield; /* Hide spinner for Firefox */
+  width: 65px; padding: 5px 8px; background-color: #3a4a65; color: #e8f0ff; border: 1px solid #555; border-radius: 6px; text-align: center; font-size: 14px; font-weight: 500;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); -moz-appearance: textfield;
 }
-.value-input::-webkit-outer-spin-button,
-.value-input::-webkit-inner-spin-button {
-  -webkit-appearance: none; /* Hide spinner for Chrome/Safari */
-  margin: 0;
-}
-.value-input:focus {
-  outline: none;
-  border-color: #4d7eff;
-  box-shadow: 0 0 0 2px rgba(77, 126, 255, 0.3);
-}
-
+.value-input::-webkit-outer-spin-button, .value-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.value-input:focus { outline: none; border-color: #4d7eff; box-shadow: 0 0 0 2px rgba(77, 126, 255, 0.3); }
 .slider {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 100%;
-  height: 8px;
-  background: #444; /* Slider track */
-  border-radius: 4px;
-  outline: none;
-  margin-top: 5px;
-  cursor: pointer;
+  -webkit-appearance: none; appearance: none; width: 100%; height: 8px; background: #444; border-radius: 4px; outline: none; margin-top: 5px; cursor: pointer;
 }
-.slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 18px;
-  height: 18px;
-  background: #8ab4f8; /* Google blue thumb */
-  border-radius: 50%;
-  cursor: pointer;
-  border: 2px solid #2d2d2d; /* Border matching background */
-  transition: background-color 0.2s ease;
-}
-.slider::-moz-range-thumb {
-  width: 18px;
-  height: 18px;
-  background: #8ab4f8;
-  border-radius: 50%;
-  cursor: pointer;
-  border: 2px solid #2d2d2d;
-  transition: background-color 0.2s ease;
-}
+.slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 18px; height: 18px; background: #8ab4f8; border-radius: 50%; cursor: pointer; border: 2px solid #2d2d2d; transition: background-color 0.2s ease; }
+.slider::-moz-range-thumb { width: 18px; height: 18px; background: #8ab4f8; border-radius: 50%; cursor: pointer; border: 2px solid #2d2d2d; transition: background-color 0.2s ease; }
 .slider::-webkit-slider-thumb:hover { background: #aecbfa; }
 .slider::-moz-range-thumb:hover { background: #aecbfa; }
 
-
-/* Dark Input style for Output Length, Stop Sequences */
+/* Dark Input style */
 .dark-input {
-  width: 100%;
-  padding: 10px 12px;
-  border: 1px solid #555;
-  border-radius: 8px;
-  font-size: 14px;
-  transition: border 0.3s ease, box-shadow 0.3s ease;
-  font-family: inherit;
-  background-color: #3a3a3a; /* Slightly different bg */
-  color: #e0e0e0;
-  box-sizing: border-box;
+  width: 100%; padding: 10px 12px; border: 1px solid #555; border-radius: 8px; font-size: 14px; transition: border 0.3s ease, box-shadow 0.3s ease;
+  font-family: inherit; background-color: #3a3a3a; color: #e0e0e0; box-sizing: border-box;
 }
-.dark-input:focus {
-  border-color: #4d7eff;
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(77, 126, 255, 0.3);
-}
+.dark-input:focus { border-color: #4d7eff; outline: none; box-shadow: 0 0 0 2px rgba(77, 126, 255, 0.3); }
 
-
-/* Dropdown Sections (Tools, Advanced, Debug, File Pool) */
-.settings-dropdown {
-  border: 1px solid #444;
-  border-radius: 8px;
-  background-color: #333;
-  overflow: hidden; /* Clip content to rounded corners */
-}
-
+/* Dropdown Sections */
+.settings-dropdown { border: 1px solid #444; border-radius: 8px; background-color: #333; overflow: hidden; }
 .settings-dropdown button.dropdown-toggle-button {
-  width: 100%;
-  padding: 10px 15px;
-  background-color: transparent; /* Use container background */
-  color: #e8eaed;
-  border: none;
-  /* border-bottom: 1px solid #444; */ /* Add border only if content is open? */
-  cursor: pointer;
-  text-align: left;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: 600;
-  font-size: 14px;
-  transition: background-color 0.2s ease;
+  width: 100%; padding: 10px 15px; background-color: transparent; color: #e8eaed; border: none; cursor: pointer; text-align: left; display: flex;
+  justify-content: space-between; align-items: center; font-weight: 600; font-size: 14px; transition: background-color 0.2s ease;
 }
-.settings-dropdown button.dropdown-toggle-button:hover {
-  background-color: #3a3a3a;
-}
-
-.dropdown-menu-content {
-  padding: 15px;
-  background-color: #333; /* Match container */
-  border-top: 1px solid #444; /* Separator line */
-}
+.settings-dropdown button.dropdown-toggle-button:hover { background-color: #3a3a3a; }
+.dropdown-menu-content { padding: 15px; background-color: #333; border-top: 1px solid #444; }
 
 /* Tools Menu Specific Styling */
-.tools-menu {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
+.tools-menu { display: flex; flex-direction: column; gap: 10px; }
 .tool-button {
-  padding: 8px 12px;
-  background-color: #444;
-  border: 1px solid #555;
-  border-radius: 6px;
-  color: #e0e0e0;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-  text-align: center;
-  font-size: 13px;
+  padding: 8px 12px; background-color: #444; border: 1px solid #555; border-radius: 6px; color: #e0e0e0; cursor: pointer; transition: background-color 0.2s ease;
+  text-align: center; font-size: 13px;
 }
-.tool-button:hover {
-  background-color: #555;
-}
+.tool-button:hover { background-color: #555; }
 
 /* Settings Menu Specific Styling */
-.settings-menu .parameter-control {
-   background-color: transparent; /* Remove extra bg inside dropdown */
-   border: none;
-   padding: 0;
-   margin-bottom: 15px;
-}
-.settings-menu .parameter-control:last-child {
-   margin-bottom: 0;
-}
-
+.settings-menu .parameter-control { background-color: transparent; border: none; padding: 0; margin-bottom: 15px; }
+.settings-menu .parameter-control:last-child { margin-bottom: 0; }
 
 /* Debug Section Specific Styling */
-.debug-section .dropdown-menu-content {
-   padding-top: 10px;
-}
-
+.debug-section .dropdown-menu-content { padding-top: 10px; }
 .debug-logs {
-  max-height: 350px; /* Limit height */
-  overflow-y: auto;
-  background: #222; /* Darker background for logs */
-  border: 1px solid #444;
-  border-radius: 6px;
-  color: #ccc;
-  margin-bottom: 10px; /* Space before clear button */
-  padding: 5px;
-  scrollbar-width: thin;
-  scrollbar-color: #555 #222;
+  max-height: 350px; overflow-y: auto; background: #222; border: 1px solid #444; border-radius: 6px; color: #ccc; margin-bottom: 10px;
+  padding: 5px; scrollbar-width: thin; scrollbar-color: #555 #222;
 }
 .debug-logs::-webkit-scrollbar { width: 8px; }
 .debug-logs::-webkit-scrollbar-track { background: #222; border-radius: 4px; }
 .debug-logs::-webkit-scrollbar-thumb { background-color: #555; border-radius: 4px; border: 2px solid #222; }
-
-.debug-log {
-  padding: 8px 10px;
-  margin-bottom: 5px;
-  border-bottom: 1px solid #383838;
-  font-size: 0.85em;
-  line-height: 1.4;
-}
+.debug-log { padding: 8px 10px; margin-bottom: 5px; border-bottom: 1px solid #383838; font-size: 0.85em; line-height: 1.4; }
 .debug-log:last-child { border-bottom: none; margin-bottom: 0; }
-
-.log-header {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 4px;
-  font-size: 0.9em;
-  color: #888;
-}
+.log-header { display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 0.9em; color: #888; }
 .log-type { font-weight: bold; }
-
 .log-details { display: flex; flex-wrap: wrap; gap: 4px 10px; margin-bottom: 4px; }
 .log-details div { font-size: 0.95em; color: #aaa;}
 .log-details strong { color: #bbb; }
-
 .log-message { margin-top: 4px; }
 .log-message strong { display: block; margin-bottom: 2px; color: #bbb; }
-
 .message-content-preview {
-  background: #1a1a1a;
-  border: 1px solid #333;
-  padding: 5px 8px;
-  border-radius: 4px;
-  max-height: 100px; /* Limit preview height */
-  overflow: hidden;
-  white-space: pre-wrap;
-  word-break: break-word;
-  color: #ccc;
-  font-family: monospace;
-  font-size: 0.95em;
+  background: #1a1a1a; border: 1px solid #333; padding: 5px 8px; border-radius: 4px; max-height: 100px; overflow: hidden;
+  white-space: pre-wrap; word-break: break-word; color: #ccc; font-family: monospace; font-size: 0.95em;
 }
-/* Add specific styles for error logs? */
 .debug-log.error { background-color: rgba(244, 67, 54, 0.1); border-left: 3px solid #f44336; }
 .debug-log.error .log-type { color: #f44336; }
-
 .no-logs { padding: 15px; color: #888; font-style: italic; text-align: center; }
-
 .clear-debug-button {
-  width: 100%;
-  margin-top: 10px;
-  background-color: #555;
-  color: #ccc;
-  border: 1px solid #666;
-  padding: 6px 10px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 13px;
-  transition: background-color 0.2s ease;
+  width: 100%; margin-top: 10px; background-color: #555; color: #ccc; border: 1px solid #666; padding: 6px 10px; border-radius: 6px;
+  cursor: pointer; font-size: 13px; transition: background-color 0.2s ease;
 }
 .clear-debug-button:hover { background-color: #666; }
 
-/* File Pool Placeholder */
-.file-pool-placeholder { text-align: center; color: #888; font-style: italic; padding: 20px; }
-
-/* Confirmation Modal (Copied from stable MainArea.css) */
-.confirmation-modal-overlay {
-  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-  background-color: rgba(0, 0, 0, 0.7);
-  display: flex; justify-content: center; align-items: center;
-  z-index: 1000;
-}
-.confirmation-modal {
-  background-color: #303134; border-radius: 8px; padding: 25px;
-  width: 400px; max-width: 90%;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); color: #e8eaed;
-}
-.confirmation-modal h3 { margin-top: 0; margin-bottom: 16px; font-size: 1.2em; }
-.confirmation-modal p { margin-bottom: 25px; line-height: 1.5; font-size: 0.95em; }
-.confirmation-buttons { display: flex; justify-content: flex-end; gap: 12px; }
-.confirmation-buttons button {
-  padding: 8px 18px; border-radius: 6px; border: none;
-  cursor: pointer; font-weight: 600; font-size: 14px;
-  transition: background-color 0.2s ease;
-}
-.confirmation-buttons .cancel-button { background-color: #555; color: #e8eaed; }
-.confirmation-buttons .confirm-button { background-color: #c74037; color: white; } /* Darker red */
-.confirmation-buttons .cancel-button:hover { background-color: #666; }
-.confirmation-buttons .confirm-button:hover { background-color: #d32f2f; } /* Brighter red on hover */
-
-/* === File Pool Styles === */
-
-.file-pool-container {
-  position: relative; /* Needed for absolute positioning of drop-instructions */
-  border-top: 1px solid #444; /* Separator line from button */
-  background-color: #333; /* Match dropdown content background */
-}
-
-/* Style when dragging files over */
-.file-pool-container.drag-active {
-  outline: 2px dashed #8ab4f8;
-  outline-offset: -5px; /* Offset inside */
-  background-color: #3a3a3a;
-}
-
-.file-pool-content {
-  padding: 15px; /* Standard padding */
-}
-
-.file-pool-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-.file-pool-stats {
-  font-size: 0.9em;
-  color: #aaa;
-  display: flex;
-  gap: 15px;
-}
-
-.file-pool-actions {
-  display: flex;
-  gap: 10px;
-}
-
-.pool-action-button {
-  padding: 6px 12px;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 13px;
-  transition: background-color 0.2s ease;
-}
-
-.pool-action-button.add-button {
-  background-color: #4a4a4a;
-  color: #e0e0e0;
-  border: 1px solid #555;
-}
-.pool-action-button.add-button:hover:not(:disabled) {
-  background-color: #555;
-}
-
-.pool-action-button.clear-button {
-  background-color: #5c2d2d; /* Dark red */
-  color: #f0dcdc;
-  border: 1px solid #7a3636;
-}
-.pool-action-button.clear-button:hover:not(:disabled) {
-  background-color: #7a3636;
-}
-
-.pool-action-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* File processing error message */
-.file-processing-error {
-  background-color: rgba(244, 67, 54, 0.1);
-  border-left: 3px solid #f44336;
-  color: #f44336;
-  padding: 10px;
-  margin: 10px 0;
-  font-size: 0.9em;
-  border-radius: 4px;
-}
-
-/* Empty state message */
-.file-pool-empty {
-  text-align: center;
-  padding: 25px 15px;
-  color: #888;
-  font-size: 0.9em;
-  border: 2px dashed #444;
-  border-radius: 6px;
-}
+/* File Pool Styles */
+.file-pool-container { position: relative; border-top: 1px solid #444; background-color: #333; }
+.file-pool-container.drag-active { outline: 2px dashed #8ab4f8; outline-offset: -5px; background-color: #3a3a3a; }
+.file-pool-content { padding: 15px; }
+.file-pool-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+.file-pool-stats { font-size: 0.9em; color: #aaa; display: flex; gap: 15px; }
+.file-pool-actions { display: flex; gap: 10px; }
+.pool-action-button { padding: 6px 12px; border-radius: 6px; border: none; cursor: pointer; font-weight: 600; font-size: 13px; transition: background-color 0.2s ease; }
+.pool-action-button.add-button { background-color: #4a4a4a; color: #e0e0e0; border: 1px solid #555; }
+.pool-action-button.add-button:hover:not(:disabled) { background-color: #555; }
+.pool-action-button.clear-button { background-color: #5c2d2d; color: #f0dcdc; border: 1px solid #7a3636; }
+.pool-action-button.clear-button:hover:not(:disabled) { background-color: #7a3636; }
+.pool-action-button:disabled { opacity: 0.5; cursor: not-allowed; }
+.file-processing-error { background-color: rgba(244, 67, 54, 0.1); border-left: 3px solid #f44336; color: #f44336; padding: 10px; margin: 10px 0; font-size: 0.9em; border-radius: 4px; }
+.file-pool-empty { text-align: center; padding: 25px 15px; color: #888; font-size: 0.9em; border: 2px dashed #444; border-radius: 6px; }
 .file-pool-empty p { margin: 5px 0; }
-
-/* Processing indicator */
-.file-processing {
-  text-align: center;
-  padding: 15px;
-  color: #8ab4f8;
-  font-style: italic;
-  font-size: 0.9em;
-}
-
-/* File list container */
-.file-pool-files {
-  max-height: 250px; /* Limit height */
-  overflow-y: auto;
-  margin-top: 10px;
-  padding-right: 5px; /* Space for scrollbar */
-  scrollbar-width: thin;
-  scrollbar-color: #555 #333;
-}
+.file-processing { text-align: center; padding: 15px; color: #8ab4f8; font-style: italic; font-size: 0.9em; }
+.file-pool-files { max-height: 250px; overflow-y: auto; margin-top: 10px; padding-right: 5px; scrollbar-width: thin; scrollbar-color: #555 #333; }
 .file-pool-files::-webkit-scrollbar { width: 8px; }
 .file-pool-files::-webkit-scrollbar-track { background: #333; border-radius: 4px; }
 .file-pool-files::-webkit-scrollbar-thumb { background-color: #555; border-radius: 4px; border: 2px solid #333; }
-
-/* Individual file item */
-.file-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 10px; /* Compact padding */
-  border-radius: 6px;
-  background-color: #3a3a3a; /* Slightly lighter */
-  margin-bottom: 6px;
-  border-left: 4px solid #8ab4f8; /* Default border color */
-  transition: background-color 0.2s ease;
-}
+.file-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; border-radius: 6px; background-color: #3a3a3a; margin-bottom: 6px; border-left: 4px solid #8ab4f8; transition: background-color 0.2s ease; }
 .file-item:hover { background-color: #444; }
+.file-item.pdf { border-left-color: #f97c63; }
+.file-item.rtf { border-left-color: #6bbaa7; }
+.file-item.text { border-left-color: #8ab4f8; }
+.file-info { flex: 1; overflow: hidden; margin-right: 10px; }
+.file-name { font-weight: 500; font-size: 0.9em; color: #e0e0e0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; margin-bottom: 3px; }
+.file-name span { margin-right: 6px; }
+.file-meta { display: flex; gap: 12px; font-size: 0.8em; color: #aaa; }
+.file-token-count { font-weight: 500; color: #8ab4f8; }
+.remove-file-button { background-color: transparent; color: #9aa0a6; border: none; font-size: 16px; line-height: 1; cursor: pointer; padding: 2px 4px; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; transition: background-color 0.2s ease, color 0.2s ease; }
+.remove-file-button:hover { background-color: #f44336; color: white; }
+.drop-instructions { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(42, 47, 56, 0.9); border-radius: 8px; display: flex; align-items: center; justify-content: center; z-index: 20; pointer-events: none; }
+.drop-instructions p { color: #8ab4f8; font-size: 1.2em; font-weight: bold; text-align: center; }
 
-/* Specific border colors per type */
-.file-item.pdf { border-left-color: #f97c63; } /* Orange-red for PDF */
-.file-item.rtf { border-left-color: #6bbaa7; } /* Teal-green for RTF */
-.file-item.text { border-left-color: #8ab4f8; } /* Blue for Text */
-
-.file-info {
-  flex: 1;
-  overflow: hidden; /* Prevent long names breaking layout */
-  margin-right: 10px;
-}
-
-.file-name {
-  font-weight: 500;
-  font-size: 0.9em;
-  color: #e0e0e0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: block; /* Ensure it takes block space */
-  margin-bottom: 3px;
-}
-.file-name span { margin-right: 6px; } /* Space after emoji */
-
-.file-meta {
-  display: flex;
-  gap: 12px;
-  font-size: 0.8em;
-  color: #aaa;
-}
-
-.file-token-count {
-  font-weight: 500;
-  color: #8ab4f8; /* Highlight token count */
-}
-
-.remove-file-button {
-  background-color: transparent;
-  color: #9aa0a6;
-  border: none;
-  font-size: 16px; /* Larger 'X' */
-  line-height: 1;
-  cursor: pointer;
-  padding: 2px 4px; /* Small padding */
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
-.remove-file-button:hover {
-  background-color: #f44336;
-  color: white;
-}
-
-/* Drag-over instruction overlay */
-.drop-instructions {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(42, 47, 56, 0.9);
-  border-radius: 8px; /* Match container */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 20; /* Above file list */
-  pointer-events: none; /* Allow drops through */
-}
-.drop-instructions p {
-  color: #8ab4f8;
-  font-size: 1.2em;
-  font-weight: bold;
-  text-align: center;
-}
+/* Confirmation Modal */
+.confirmation-modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.7); display: flex; justify-content: center; align-items: center; z-index: 1000; }
+.confirmation-modal { background-color: #303134; border-radius: 8px; padding: 25px; width: 400px; max-width: 90%; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); color: #e8eaed; }
+.confirmation-modal h3 { margin-top: 0; margin-bottom: 16px; font-size: 1.2em; }
+.confirmation-modal p { margin-bottom: 25px; line-height: 1.5; font-size: 0.95em; }
+.confirmation-buttons { display: flex; justify-content: flex-end; gap: 12px; }
+.confirmation-buttons button { padding: 8px 18px; border-radius: 6px; border: none; cursor: pointer; font-weight: 600; font-size: 14px; transition: background-color 0.2s ease; }
+.confirmation-buttons .cancel-button { background-color: #555; color: #e8eaed; }
+.confirmation-buttons .confirm-button { background-color: #c74037; color: white; }
+.confirmation-buttons .cancel-button:hover { background-color: #666; }
+.confirmation-buttons .confirm-button:hover { background-color: #d32f2f; }

@@ -1,6 +1,7 @@
 /* src/components/LeftSidebar.css */
 .left-sidebar {
   width: 200px; /* Fixed width */
+  flex-shrink: 0; /* Prevent sidebar from shrinking */
   background-color: #303134;
   padding: 20px;
   box-sizing: border-box;
