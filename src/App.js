@@ -4,9 +4,10 @@ import './App.css';
 import LeftSidebar from './components/LeftSidebar';
 import RightSidebar from './components/RightSidebar';
 import MainArea from './components/MainArea';
-import { getTokenLimit } from './components/MainArea'; // Import helper if needed, or redefine here
+// Import helper if needed, or redefine here (redefining is simpler for now)
+// import { getTokenLimit } from './components/MainArea';
 
-// Define getTokenLimit here if not importing (simpler for now)
+// Define getTokenLimit here if not importing
 const MODEL_TOKEN_LIMITS = {
     'gemini-2.5-pro-exp-03-25': 1048576,
     'gemini-1.5-pro': 2097152,
@@ -37,36 +38,46 @@ function App() {
 
   // --- Handlers and Callbacks ---
 
-  // Update token count from MainArea (includes messages, sys instructions, files)
-  // Renamed parameter 'count' to 'conversationCount' for clarity
+  // Update token count from MainArea
   const handleTokenCountChange = useCallback((conversationCount, currentLimit) => {
     setConversationTokenCount(conversationCount);
-    // We get the limit from MainArea too, which is based on the selectedModel
-    // already passed down, so we can just use it.
     setTokenLimit(currentLimit);
-  }, []); // No dependencies needed if it just sets state
+  }, []);
 
-  // Add a new debug log entry
+  // Add a new debug log entry (more robust)
   const addDebugLog = useCallback((logData) => {
-    // Add full context to the log
+    // Ensure essential fields exist and add context
     const logEntry = {
-      ...logData,
-      // Ensure core parameters are always included if not already present
+      type: logData.type || 'info', // Default to 'info' if type is missing
+      message: logData.message || '(No message provided)', // Default message
+      timestamp: logData.timestamp || new Date().toISOString(),
+      // Add context parameters if not already present in logData
       model: logData.model || selectedModel,
       temperature: typeof logData.temperature === 'number' ? logData.temperature : temperature,
       outputLength: typeof logData.outputLength === 'number' ? logData.outputLength : outputLength,
       topP: typeof logData.topP === 'number' ? logData.topP : topP,
-      timestamp: logData.timestamp || new Date().toISOString(), // Ensure timestamp
+      // Include other fields from logData if they exist
+      tokenCount: typeof logData.tokenCount === 'number' ? logData.tokenCount : undefined,
+      responseTime: typeof logData.responseTime === 'number' ? logData.responseTime : undefined,
+      details: logData.details || undefined,
     };
+    // Remove undefined fields for cleaner logs
+    Object.keys(logEntry).forEach(key => logEntry[key] === undefined && delete logEntry[key]);
+
     setDebugLogs(prevLogs => [logEntry, ...prevLogs].slice(0, 50)); // Keep latest 50
   }, [selectedModel, temperature, outputLength, topP]); // Dependencies for context
+
 
   // Clear debug logs
   const clearDebugLogs = useCallback(() => {
     setDebugLogs([]);
     // Optional: Add a log entry indicating clearance
-    addDebugLog({ type: 'debug-clear', message: 'Debug logs cleared.' });
-  }, [addDebugLog]);
+    // This addDebugLog call needs to happen *before* setDebugLogs([]) if you want it to appear briefly
+    // Or, handle it specially if needed. For simplicity, just clear for now.
+    // addDebugLog({ type: 'debug-clear', message: 'Debug logs cleared.' });
+    console.log("Debug logs cleared."); // Log to console instead
+  }, []); // Removed addDebugLog dependency to avoid potential loop if logging itself fails
+
 
   // Function to trigger history clear in MainArea via ref
   const clearHistory = useCallback(() => {
@@ -74,10 +85,11 @@ function App() {
       mainAreaRef.current.clearHistory();
     } else {
        console.error("Could not call clearHistory on MainArea ref.");
-       // Fallback if ref fails? Clear messages directly in App?
-       // setMessages([]); // Use with caution, might desync state if ref exists
+       // Fallback: Directly clear messages in App state if ref fails.
+       addDebugLog({ type: 'warning', message: 'MainArea ref not found, clearing history from App.' });
+       setMessages([]);
     }
-  }, []); // No dependencies, relies on ref
+  }, [addDebugLog]); // Add addDebugLog dependency here
 
 
   // --- Effects ---
@@ -93,7 +105,7 @@ function App() {
   // --- Render ---
   return (
     <div className="App">
-      <LeftSidebar /> {/* Will update in Step 3 */}
+      <LeftSidebar />
       <MainArea
         ref={mainAreaRef} // Pass ref
         selectedModel={selectedModel}
@@ -120,12 +132,12 @@ function App() {
         debugLogs={debugLogs}           // Pass down state
         clearDebugLogs={clearDebugLogs}     // Pass down handler
         onClearHistory={clearHistory}       // Pass down handler
-        // Pass file pool state/setters later in Phase 3
+        // Pass file pool state/setters
         filePool={filePool}
         setFilePool={setFilePool}
         filePoolTokenCount={filePoolTokenCount}
         setFilePoolTokenCount={setFilePoolTokenCount}
-        addDebugLog={addDebugLog} // Pass addDebugLog for file operations later
+        addDebugLog={addDebugLog} // Pass addDebugLog for file operations
       />
     </div>
   );
