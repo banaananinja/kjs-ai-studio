@@ -252,20 +252,33 @@ select:hover {
   color: #aaa;
 }
 
-.slider-value {
-  background-color: black;
-  color: #005299; /* Darker blue text */
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 12px;
-  font-weight: bold;
-  margin-left: 8px;
-}
-
 .label-with-value {
   display: flex;
   align-items: center;
   margin-bottom: 5px;
+  width: 100%;
+  padding-right: 0;
+}
+
+.label-with-value label {
+  flex: 1;
+  font-weight: 500;
+  color: #e0e0e0;
+}
+
+.slider-value {
+  background-color: #3a4a65; /* Dark blue that complements the app's color scheme */
+  color: #e8f0ff; /* Light blue-white for better readability */
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  min-width: 40px;
+  text-align: center;
+  display: inline-block;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  margin-left: auto;
+  margin-right: 5px; /* Add spacing from the right edge */
 }
 
 .slider-container {
@@ -306,19 +319,6 @@ select:hover {
   font-size: 12px;
   color: #aaa;
   margin-top: 5px;
-}
-
-.label-with-value {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 5px;
-}
-
-.slider-value {
-  color: #4d7eff;
-  font-weight: 600;
-  font-size: 14px;
 }
 
 /* Dark mode input styling */
