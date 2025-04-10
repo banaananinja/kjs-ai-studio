@@ -58,16 +58,29 @@ function RightSidebar({
 
   // Temperature slider AND text input handler
   const handleTemperatureChange = (value) => {
+    // Allow intermediate strings like "0." temporarily if needed, but parse final value
     const newTemp = parseFloat(value);
+    // If parsing fails (e.g., empty string, just "."), don't update the number yet,
+    // but allow the input value itself to reflect the typing maybe?
+    // Or simpler: only update if valid float.
     if (!isNaN(newTemp) && newTemp >= 0 && newTemp <= 2) {
       setTemperature(newTemp); // Update App.js state
     }
+    // If the input value is just '.', '0.', etc., maybe don't clamp immediately?
+    // For simplicity, let's stick to updating only on valid float for now.
   };
 
   // Output Length text input handler (with validation)
   const handleOutputLengthChange = (value) => {
      const maxAllowed = getSidebarMaxOutputTokens(selectedModel);
      let newLength = parseInt(value, 10);
+
+     // If input is empty or invalid, maybe reset to default or min? Or just don't update.
+     if (value === '') {
+        // Decide behavior for empty input - maybe reset to default? For now, do nothing.
+        // Or maybe setOutputLength(1); // Minimum
+        return; // Or handle as needed
+     }
 
      if (isNaN(newLength) || newLength < 1) {
          newLength = 1; // Minimum valid value
@@ -84,11 +97,6 @@ function RightSidebar({
          setTopP(newTopP); // Update App.js state
        }
    };
-
-  // Stop Sequences handler (if needed later)
-  // const [stopSequences, setStopSequences] = useState('');
-  // const handleStopSequencesChange = (e) => setStopSequences(e.target.value);
-
 
   // --- UI Interaction Handlers ---
 
@@ -150,11 +158,14 @@ function RightSidebar({
       <div className="parameter-control">
         <div className="label-input-group">
           <label htmlFor="temperature-input">Temperature:</label>
+          {/* Display formatted value separately */}
+          <span className="slider-value">{temperature.toFixed(2)}</span>
           <input
               type="number"
               id="temperature-input"
               className="value-input"
-              value={temperature.toFixed(2)} // Display state from App.js
+              // *** FIX HERE: Bind directly to the number state ***
+              value={temperature}
               onChange={(e) => handleTemperatureChange(e.target.value)}
               step="0.01" min="0" max="2"
           />
@@ -220,11 +231,14 @@ function RightSidebar({
              <div className="parameter-control">
                <div className="label-input-group">
                    <label htmlFor="topP-input">Top P:</label>
+                   {/* Display formatted value separately */}
+                   <span className="slider-value">{topP.toFixed(2)}</span>
                    <input
                        type="number"
                        id="topP-input"
                        className="value-input"
-                       value={topP.toFixed(2)} // Use state from App.js
+                       // *** FIX HERE: Bind directly to the number state ***
+                       value={topP}
                        onChange={(e) => handleTopPChange(e.target.value)}
                        step="0.01" min="0" max="1"
                    />
