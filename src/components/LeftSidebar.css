@@ -1,23 +1,47 @@
 /* src/components/LeftSidebar.css */
 .left-sidebar {
-    width: 15%;
-    background-color: #303134;
-    padding: 20px;
-    box-sizing: border-box;
-    color: #e8eaed;
-  }
-  
-  .left-sidebar h2 {
-    margin-top: 0;
-  }
-  
-  .left-sidebar ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .left-sidebar ul li {
-    margin-bottom: 10px;
-    cursor: pointer;
-  }
-  
+  width: 200px; /* Fixed width */
+  background-color: #303134;
+  padding: 20px;
+  box-sizing: border-box;
+  color: #e8eaed;
+  display: flex;
+  flex-direction: column; /* Stack logo and links */
+  height: 100vh;
+  border-right: 1px solid #444;
+}
+
+/* Logo Styling */
+.sidebar-logo {
+  max-width: 90%; /* Control logo size */
+  height: auto; /* Maintain aspect ratio */
+  margin: 0 auto 25px auto; /* Center horizontally, add bottom margin */
+  display: block;
+}
+
+/* Navigation List Styling */
+.left-sidebar ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.left-sidebar ul li {
+  padding: 10px 15px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+  font-size: 14px;
+}
+
+.left-sidebar ul li:hover {
+  background-color: #3c4043;
+}
+
+/* Style for the active link/view (optional) */
+.left-sidebar ul li.active {
+  background-color: #8ab4f8;
+  color: #202124;
+  font-weight: bold;
+}

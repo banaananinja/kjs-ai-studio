@@ -1,41 +1,41 @@
 /* src/components/MainArea.css */
-.main-area {
+
+/* Overall Container */
+.main-area-container {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: 16px;
-  height: 100%;
-  max-height: 100vh;
-  overflow: hidden; /* Prevent scrolling beyond bounds */
-  scrollbar-width: thin;
-  scrollbar-color: #444 #2d2d2d;
-  -ms-overflow-style: none;
+  height: 100%; /* Ensure it fills parent */
+  overflow: hidden; /* Prevent container scroll */
+  background-color: #202124;
+  color: #e8eaed;
+  padding: 0; /* Remove padding from container, add to children */
 }
 
+/* System Instructions */
 .system-instructions-container {
-  background-color: #2d2d2d;
-  border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
-  padding: 14px;
-  transition: all 0.3s ease;
-  border: 1px solid #444;
-  flex-shrink: 0;
-}
-
-.system-instructions-container.collapsed {
-  padding: 10px 14px;
-  max-height: 60px;
+  padding: 15px 20px;
+  background-color: #2d2d2d; /* Slightly lighter than main bg */
+  border-bottom: 1px solid #3c4043;
+  flex-shrink: 0; /* Prevent shrinking */
+  transition: max-height 0.3s ease-out, padding 0.3s ease-out;
   overflow: hidden;
 }
 
+.system-instructions-container.collapsed {
+  max-height: 50px; /* Height of header */
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
 .system-instructions-container.expanded {
-  max-height: 200px; /* Limit height to avoid pushing content down too far */
+  max-height: 250px; /* Adjust as needed */
 }
 
 .instructions-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  cursor: pointer; /* Make header clickable */
   margin-bottom: 10px;
 }
 
@@ -49,8 +49,8 @@
 .toggle-button {
   background: #444;
   border: none;
-  width: 26px;
-  height: 26px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -59,30 +59,27 @@
   color: #e0e0e0;
   cursor: pointer;
   transition: background 0.2s ease;
+  padding: 0;
 }
 
 .toggle-button:hover {
   background: #555;
 }
 
-.system-instructions-container label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-  color: #fff;  /* Changed from #333 to white */
-}
-
 .system-instructions-input {
-  width: 95%;  /* Changed from 100% to 95% to make it less wide */
+  width: 100%;
   padding: 10px 12px;
   border: 1px solid #555;
   border-radius: 8px;
   font-size: 14px;
-  resize: none;
+  resize: vertical; /* Allow vertical resize */
+  min-height: 60px;
   transition: border 0.3s ease, box-shadow 0.3s ease;
   font-family: inherit;
   background-color: #333;
   color: #e0e0e0;
+  margin-bottom: 10px; /* Space before help text */
+  box-sizing: border-box;
 }
 
 .system-instructions-input:focus {
@@ -91,66 +88,282 @@
   box-shadow: 0 0 0 2px rgba(77, 126, 255, 0.3);
 }
 
-.instructions-help {
+/* Chat History Area */
+.chat-history {
+  flex: 1; /* Grow to fill space */
+  overflow-y: auto; /* Enable scrolling for messages */
+  padding: 20px;
+  min-height: 0; /* Important for flexbox scrolling */
+  scrollbar-width: thin;
+  scrollbar-color: #444 #2d2d2d;
+}
+.chat-history::-webkit-scrollbar { width: 8px; }
+.chat-history::-webkit-scrollbar-track { background: #2d2d2d; border-radius: 4px; }
+.chat-history::-webkit-scrollbar-thumb { background-color: #444; border-radius: 4px; border: 2px solid #2d2d2d; }
+.chat-history::-webkit-scrollbar-thumb:hover { background-color: #555; }
+
+/* Message Bubbles */
+.message-bubble {
+  position: relative;
+  padding: 15px 20px 15px 20px;
+  padding-top: 45px; /* Increased top padding for buttons */
+  border-radius: 12px;
+  max-width: 90%;
+  min-width: 60%; /* Adjust as needed */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  margin-bottom: 15px;
+  transition: max-height 0.3s ease, background-color 0.2s ease;
+  overflow: visible; /* Allow dropdown to overflow */
+}
+
+.message-bubble.user {
+  background-color: #2a2f38;
+  margin-left: auto;
+  border-top-right-radius: 4px; /* Speech bubble tail */
+}
+
+.message-bubble.assistant {
+  background-color: #1e2127;
+  margin-right: auto;
+  border-top-left-radius: 4px; /* Speech bubble tail */
+}
+
+.message-bubble.error {
+  background-color: #4d2a2a; /* Reddish background for errors */
+  border-left: 4px solid #f28b82;
+}
+
+/* Loading Indicator Bubble */
+ .message-bubble.loading {
+    padding: 15px 20px; /* Normal padding */
+    font-style: italic;
+    color: #aaa;
+ }
+
+/* Message Sender */
+.message-sender {
+  position: absolute;
+  top: 15px; /* Position sender name */
+  left: 20px;
+  font-weight: bold;
+  font-size: 0.9em;
+  color: #aaa;
+}
+
+/* Message Actions (Buttons) */
+.message-actions {
+  position: absolute;
+  top: 10px; /* Position buttons */
+  right: 15px;
+  display: flex;
+  gap: 8px;
+  z-index: 10; /* Ensure buttons are above content */
+}
+
+.action-button {
+  background-color: rgba(74, 74, 74, 0.7); /* Semi-transparent background */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 16px; /* Slightly smaller */
+  cursor: pointer;
+  padding: 0; /* Remove padding, rely on width/height */
+  border-radius: 50%; /* Make buttons circular */
+  width: 28px; /* Fixed size */
+  height: 28px; /* Fixed size */
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-top: 10px;
-  color: #aaa;
-  font-size: 13px;
-  padding: 6px 8px;
-  background-color: #3a3a3a;
+  justify-content: center;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  line-height: 1; /* Ensure emoji is centered vertically */
+}
+
+.action-button:hover {
+  background-color: #666;
+  transform: scale(1.1);
+}
+
+.action-button.save { background-color: rgba(66, 133, 244, 0.7); border-color: rgba(66, 133, 244, 1); }
+.action-button.cancel { background-color: rgba(244, 67, 54, 0.7); border-color: rgba(244, 67, 54, 1); }
+.action-button.save:hover { background-color: #4285f4; }
+.action-button.cancel:hover { background-color: #f44336; }
+
+/* Message Content Wrapper */
+.message-content-wrapper {
+  margin-top: 5px; /* Space below sender/buttons */
+  overflow: hidden; /* Needed for expanded transition */
+}
+
+/* Edit Textarea */
+.edit-message-textarea {
+  width: 100%;
+  min-height: 80px;
+  background-color: #303134;
+  color: #e8eaed;
+  border: 1px solid #5f6368;
+  border-radius: 4px;
+  padding: 8px;
+  margin-top: 8px; /* Space from buttons */
+  box-sizing: border-box;
+  font-family: inherit;
+  font-size: inherit;
+  resize: vertical;
+}
+.edit-message-textarea:focus {
+  border-color: #8ab4f8;
+  outline: none;
+}
+
+/* Expand/Collapse Logic */
+.message-bubble:not(.expanded) .message-content-wrapper {
+  max-height: 250px; /* Limit height when collapsed */
+  overflow-y: auto; /* Scroll within content when collapsed */
+  scrollbar-width: thin;
+  scrollbar-color: #444 #2d2d2d;
+}
+.message-bubble:not(.expanded) .message-content-wrapper::-webkit-scrollbar { width: 6px; }
+.message-bubble:not(.expanded) .message-content-wrapper::-webkit-scrollbar-thumb { background-color: #555; border-radius: 3px; }
+.message-bubble:not(.expanded) .message-content-wrapper::-webkit-scrollbar-track { background: #333; border-radius: 3px; }
+
+
+.message-bubble.expanded .message-content-wrapper {
+  max-height: none; /* No limit when expanded */
+  overflow: visible; /* No scrollbar when expanded */
+}
+
+/* Dropdown Menu */
+.dropdown-container {
+  position: relative; /* Anchor point for the menu */
+}
+
+.dropdown-menu {
+  position: fixed; /* Position relative to viewport */
+  background-color: #2d2d2d;
+  border: 1px solid #555;
   border-radius: 6px;
-}
-
-.info-icon {
-  color: #4d7eff;
-  font-style: normal;
-}
-
-/* Animation for expanding/collapsing */
-.system-instructions-container.expanded {
-  max-height: 200px;
-  opacity: 1;
-}
-
-@media (max-width: 768px) {
-  .main-area {
-    padding: 10px;
-    gap: 15px;
-  }
-  
-  .system-instructions-container {
-    padding: 12px;
-  }
-}
-
-/* Ensure proper layout for the GeminiPrompt component */
-.main-area > :last-child {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  z-index: 1000; /* Above everything */
+  min-width: 140px;
+  padding: 5px 0;
   overflow: hidden;
 }
 
-/* Dark Mode Scrollbar Styling */
-.main-area::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+.dropdown-menu button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 8px 15px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #e0e0e0;
+  font-size: 14px;
+  white-space: nowrap;
 }
 
-.main-area::-webkit-scrollbar-thumb {
+.dropdown-menu button:hover {
   background-color: #444;
-  border-radius: 4px;
-  border: 2px solid #2d2d2d;
 }
 
-.main-area::-webkit-scrollbar-thumb:hover {
-  background-color: #555;
+/* Markdown Content Styling */
+.markdown-content {
+  line-height: 1.6;
+  word-wrap: break-word;
+  color: #e8eaed; /* Ensure default text color */
+}
+.markdown-content p { margin: 0.5em 0; }
+.markdown-content h1, .markdown-content h2, .markdown-content h3,
+.markdown-content h4, .markdown-content h5, .markdown-content h6 {
+  margin-top: 1em; margin-bottom: 0.5em; font-weight: 600; color: #e8eaed; border-bottom: 1px solid #444; padding-bottom: 0.2em;
+}
+.markdown-content h1 { font-size: 1.8em; }
+.markdown-content h2 { font-size: 1.5em; }
+.markdown-content h3 { font-size: 1.3em; }
+.markdown-content ul, .markdown-content ol { padding-left: 1.8em; margin: 0.8em 0; }
+.markdown-content li { margin: 0.3em 0; }
+.markdown-content blockquote { border-left: 4px solid #555; margin: 1em 0; padding: 0.5em 1em; color: #aaa; background-color: #2a2a2a; }
+.markdown-content code { font-family: 'Courier New', monospace; padding: 2px 5px; background-color: #282c34; border-radius: 3px; font-size: 0.9em; color: #abb2bf; }
+.markdown-content pre { background-color: #282c34; padding: 12px; border-radius: 5px; overflow-x: auto; margin: 1em 0; font-size: 0.9em; }
+.markdown-content pre code { background-color: transparent; padding: 0; border-radius: 0; color: inherit; font-size: inherit;}
+.markdown-content a { color: #8ab4f8; text-decoration: none; }
+.markdown-content a:hover { text-decoration: underline; }
+.markdown-content table { border-collapse: collapse; width: 100%; margin: 1em 0; background-color: #2a2a2a; }
+.markdown-content th, .markdown-content td { border: 1px solid #444; padding: 8px 12px; text-align: left; }
+.markdown-content th { background-color: #3c4043; font-weight: bold; }
+.markdown-content tr:nth-child(even) { background-color: #303030; }
+.markdown-content img { max-width: 100%; border-radius: 4px; margin: 0.5em 0; }
+
+/* Prompt Input Area */
+.prompt-form {
+  padding: 15px 20px;
+  border-top: 1px solid #3c4043;
+  background-color: #202124; /* Match main background */
+  flex-shrink: 0; /* Prevent shrinking */
 }
 
-.main-area::-webkit-scrollbar-track {
-  background-color: #2d2d2d;
-  border-radius: 4px;
+.input-container {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end; /* Align items to bottom */
+}
+
+.prompt-textarea {
+  flex: 1; /* Grow to fill space */
+  padding: 10px 12px;
+  background-color: #303134;
+  color: #e8eaed;
+  border: 1px solid #3c4043;
+  border-radius: 8px;
+  resize: vertical; /* Allow vertical resize */
+  min-height: 44px; /* Minimum height for single line + padding */
+  max-height: 200px; /* Limit max height */
+  overflow-y: auto; /* Scroll if needed */
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.4;
+  box-sizing: border-box;
+}
+.prompt-textarea:focus {
+    border-color: #8ab4f8;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(138, 180, 248, 0.3);
+}
+
+.side-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.side-buttons button {
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+  min-width: 90px; /* Ensure minimum width */
+  text-align: center;
+}
+
+.run-button {
+  background-color: #8ab4f8; /* Google blue */
+  color: #202124;
+}
+.run-button:hover:not(:disabled) {
+  background-color: #aecbfa;
+}
+
+.append-button {
+  background-color: #3c4043;
+  color: #e8eaed;
+}
+.append-button:hover:not(:disabled) {
+  background-color: #5f6368;
+}
+
+.side-buttons button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: #5f6368; /* Consistent disabled style */
 }

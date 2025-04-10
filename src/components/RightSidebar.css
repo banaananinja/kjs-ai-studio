@@ -1,32 +1,36 @@
 /* src/components/RightSidebar.css */
 
-/* Right Sidebar Styles */
 .right-sidebar {
+  width: 280px; /* Slightly wider */
   background-color: #2d2d2d;
   border-left: 1px solid #444;
-  padding: 16px;
+  padding: 20px;
+  box-sizing: border-box;
+  color: #e8eaed;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  width: 250px;
-  height: 100%;
-  overflow-y: auto;
+  gap: 15px; /* Spacing between sections */
+  height: 100vh;
+  overflow-y: auto; /* Scrollbar for sidebar if content overflows */
+  scrollbar-width: thin;
+  scrollbar-color: #444 #2d2d2d;
 }
+.right-sidebar::-webkit-scrollbar { width: 8px; }
+.right-sidebar::-webkit-scrollbar-track { background: #2d2d2d; border-radius: 4px; }
+.right-sidebar::-webkit-scrollbar-thumb { background-color: #444; border-radius: 4px; border: 2px solid #2d2d2d; }
+.right-sidebar::-webkit-scrollbar-thumb:hover { background-color: #555; }
 
-/* Model Selector Styles */
-.model-selector {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
 
+/* Model Selector */
 .model-selector label {
+  display: block;
+  margin-bottom: 8px;
   font-weight: 600;
   font-size: 14px;
   color: #e0e0e0;
 }
 
-select {
+.model-selector select {
   width: 100%;
   padding: 10px 12px;
   border-radius: 8px;
@@ -41,305 +45,307 @@ select {
   cursor: pointer;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
+.model-selector select:focus {
+  outline: none;
+  border-color: #4d7eff;
+  box-shadow: 0 0 0 2px rgba(77, 126, 255, 0.3);
+}
+.model-selector select:hover { border-color: #666; }
 
-select:focus {
+/* Token Count Display */
+.token-count-display {
+  background-color: #333;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #444;
+  font-size: 13px;
+  color: #aaa;
+  text-align: center;
+}
+.token-count-display p { margin: 0; }
+
+
+/* Parameter Controls (Temp, TopP, Output Length) */
+.parameter-control {
+  padding: 12px;
+  background-color: #333;
+  border-radius: 8px;
+  border: 1px solid #444;
+  margin-bottom: 10px; /* Spacing within dropdown */
+}
+
+.parameter-control label {
+  font-weight: 600;
+  font-size: 14px;
+  color: #e0e0e0;
+  display: block; /* Ensure label takes full width */
+  margin-bottom: 8px; /* Space below label */
+}
+
+/* Combined Slider + Text Input styling */
+.label-input-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Push label and input apart */
+  margin-bottom: 8px;
+  gap: 10px;
+}
+
+.label-input-group label {
+  margin-bottom: 0; /* Remove margin when inline */
+  flex-shrink: 0; /* Prevent label from shrinking */
+}
+
+.value-input {
+  width: 65px; /* Fixed width for number input */
+  padding: 5px 8px;
+  background-color: #3a4a65; /* Dark blue */
+  color: #e8f0ff; /* Light blue-white */
+  border: 1px solid #555;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  -moz-appearance: textfield; /* Hide spinner for Firefox */
+}
+.value-input::-webkit-outer-spin-button,
+.value-input::-webkit-inner-spin-button {
+  -webkit-appearance: none; /* Hide spinner for Chrome/Safari */
+  margin: 0;
+}
+.value-input:focus {
   outline: none;
   border-color: #4d7eff;
   box-shadow: 0 0 0 2px rgba(77, 126, 255, 0.3);
 }
 
-select:hover {
-  border-color: #666;
-}
-
-/* Dropdown Menus */
-.dropdown-section {
-  margin-bottom: 16px;
-}
-
-.dropdown-title {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px;
-  background-color: #333;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.dropdown-title:hover {
-  background-color: #3a3a3a;
-}
-
-.dropdown-title span {
-  font-weight: 600;
-  color: #e0e0e0;
-}
-
-.dropdown-menu {
-  list-style-type: none;
-  padding: 8px 0;
-  margin: 4px 0 0;
-  background-color: #333;
-  border-radius: 8px;
-  overflow: hidden;
-  border: 1px solid #444;
-}
-
-.dropdown-menu li {
-  padding: 8px 12px;
-  cursor: pointer;
-  color: #e0e0e0;
-  transition: background-color 0.2s ease;
-}
-
-.dropdown-menu li:hover {
-  background-color: #444;
-}
-
-/* Tools and Advanced Settings sections */
-.tools-dropdown, .advanced-settings {
-  margin-top: 8px;
-}
-
-.section-header {
-  font-weight: 600;
-  font-size: 14px;
-  color: #e0e0e0;
-  margin-bottom: 8px;
-}
-
-/* Additional styling for toggle switches or other controls */
-.toggle-switch {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 8px 0;
-}
-
-.toggle-switch label {
-  color: #e0e0e0;
-  font-size: 14px;
-}
-
-/* Temperature Slider Styles */
-.temperature-control {
-  display: flex;
-  flex-direction: column;
-  margin: 16px 0;
-  padding: 10px;
-  background-color: #333;
-  border-radius: 8px;
-  border: 1px solid #444;
-}
-
-.control-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
-}
-
-.control-header label {
-  font-weight: 600;
-  font-size: 14px;
-  color: #e0e0e0;
-}
-
-.temperature-slider {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 100%;
-  height: 6px;
-  background: linear-gradient(to right, #4080ff, #80c0ff);
-  border-radius: 3px;
-  outline: none;
-}
-
-.temperature-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: #ffffff;
-  cursor: pointer;
-  border: 2px solid #4080ff;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
-}
-
-.temperature-slider::-moz-range-thumb {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: #ffffff;
-  cursor: pointer;
-  border: 2px solid #4080ff;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
-}
-
-.slider-labels {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 8px;
-  font-size: 12px;
-  color: #aaa;
-}
-
-.slider-container {
-  margin: 15px 0;
-  position: relative;
-}
-
 .slider {
   -webkit-appearance: none;
-  width: 100%;
-  height: 6px;
-  border-radius: 5px;
-  background: linear-gradient(90deg, #0056b3, #00a2ff, #0085ff);
-  outline: none;
-  opacity: 0.8;
-  -webkit-transition: .2s;
-  transition: opacity .2s;
-  margin: 10px 0;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-}
-
-.slider:hover {
-  opacity: 1;
-}
-
-.slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
   appearance: none;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: #ffffff;
-  cursor: pointer;
-  border: 2px solid #0077cc;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
-  transition: all 0.2s ease;
-}
-
-.slider::-webkit-slider-thumb:hover {
-  background: #f0f8ff;
-  transform: scale(1.1);
-}
-
-.slider::-moz-range-thumb {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: #ffffff;
-  cursor: pointer;
-  border: 2px solid #0077cc;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
-  transition: all 0.2s ease;
-}
-
-.slider::-moz-range-thumb:hover {
-  background: #f0f8ff;
-  transform: scale(1.1);
-}
-
-.slider-labels {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 8px;
-  font-size: 12px;
-  color: #aaa;
-}
-
-.label-with-value {
-  display: flex;
-  align-items: center;
-  margin-bottom: 5px;
-  width: 100%;
-  padding-right: 0;
-}
-
-.label-with-value label {
-  flex: 1;
-  font-weight: 500;
-  color: #e0e0e0;
-}
-
-.slider-value {
-  background-color: #3a4a65; /* Dark blue that complements the app's color scheme */
-  color: #e8f0ff; /* Light blue-white for better readability */
-  padding: 3px 8px;
-  border-radius: 4px;
-  font-size: 14px;
-  font-weight: 500;
-  min-width: 40px;
-  text-align: center;
-  display: inline-block;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-  margin-left: auto;
-  margin-right: 5px; /* Add spacing from the right edge */
-}
-
-.slider-container {
-  margin-bottom: 15px;
-}
-
-.slider {
   width: 100%;
   height: 8px;
-  background: #444;
+  background: #444; /* Slider track */
   border-radius: 4px;
-  appearance: none;
   outline: none;
-  margin: 10px 0;
+  margin-top: 5px;
+  cursor: pointer;
 }
-
 .slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
   appearance: none;
   width: 18px;
   height: 18px;
-  background: #4d7eff;
+  background: #8ab4f8; /* Google blue thumb */
   border-radius: 50%;
   cursor: pointer;
+  border: 2px solid #2d2d2d; /* Border matching background */
+  transition: background-color 0.2s ease;
 }
-
 .slider::-moz-range-thumb {
   width: 18px;
   height: 18px;
-  background: #4d7eff;
+  background: #8ab4f8;
   border-radius: 50%;
   cursor: pointer;
-  border: none;
+  border: 2px solid #2d2d2d;
+  transition: background-color 0.2s ease;
 }
+.slider::-webkit-slider-thumb:hover { background: #aecbfa; }
+.slider::-moz-range-thumb:hover { background: #aecbfa; }
 
-.slider-labels {
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  color: #aaa;
-  margin-top: 5px;
-}
 
-/* Dark mode input styling */
+/* Dark Input style for Output Length, Stop Sequences */
 .dark-input {
-  width: 95%;
+  width: 100%;
   padding: 10px 12px;
   border: 1px solid #555;
   border-radius: 8px;
   font-size: 14px;
   transition: border 0.3s ease, box-shadow 0.3s ease;
   font-family: inherit;
-  background-color: #333;
+  background-color: #3a3a3a; /* Slightly different bg */
   color: #e0e0e0;
+  box-sizing: border-box;
 }
-
 .dark-input:focus {
   border-color: #4d7eff;
   outline: none;
   box-shadow: 0 0 0 2px rgba(77, 126, 255, 0.3);
 }
 
-.input-container {
-  margin-bottom: 15px;
+
+/* Dropdown Sections (Tools, Advanced, Debug, File Pool) */
+.settings-dropdown {
+  border: 1px solid #444;
+  border-radius: 8px;
+  background-color: #333;
+  overflow: hidden; /* Clip content to rounded corners */
 }
+
+.settings-dropdown button.dropdown-toggle-button {
+  width: 100%;
+  padding: 10px 15px;
+  background-color: transparent; /* Use container background */
+  color: #e8eaed;
+  border: none;
+  /* border-bottom: 1px solid #444; */ /* Add border only if content is open? */
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
+}
+.settings-dropdown button.dropdown-toggle-button:hover {
+  background-color: #3a3a3a;
+}
+
+.dropdown-menu-content {
+  padding: 15px;
+  background-color: #333; /* Match container */
+  border-top: 1px solid #444; /* Separator line */
+}
+
+/* Tools Menu Specific Styling */
+.tools-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tool-button {
+  padding: 8px 12px;
+  background-color: #444;
+  border: 1px solid #555;
+  border-radius: 6px;
+  color: #e0e0e0;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  text-align: center;
+  font-size: 13px;
+}
+.tool-button:hover {
+  background-color: #555;
+}
+
+/* Settings Menu Specific Styling */
+.settings-menu .parameter-control {
+   background-color: transparent; /* Remove extra bg inside dropdown */
+   border: none;
+   padding: 0;
+   margin-bottom: 15px;
+}
+.settings-menu .parameter-control:last-child {
+   margin-bottom: 0;
+}
+
+
+/* Debug Section Specific Styling */
+.debug-section .dropdown-menu-content {
+   padding-top: 10px;
+}
+
+.debug-logs {
+  max-height: 350px; /* Limit height */
+  overflow-y: auto;
+  background: #222; /* Darker background for logs */
+  border: 1px solid #444;
+  border-radius: 6px;
+  color: #ccc;
+  margin-bottom: 10px; /* Space before clear button */
+  padding: 5px;
+  scrollbar-width: thin;
+  scrollbar-color: #555 #222;
+}
+.debug-logs::-webkit-scrollbar { width: 8px; }
+.debug-logs::-webkit-scrollbar-track { background: #222; border-radius: 4px; }
+.debug-logs::-webkit-scrollbar-thumb { background-color: #555; border-radius: 4px; border: 2px solid #222; }
+
+.debug-log {
+  padding: 8px 10px;
+  margin-bottom: 5px;
+  border-bottom: 1px solid #383838;
+  font-size: 0.85em;
+  line-height: 1.4;
+}
+.debug-log:last-child { border-bottom: none; margin-bottom: 0; }
+
+.log-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+  font-size: 0.9em;
+  color: #888;
+}
+.log-type { font-weight: bold; }
+
+.log-details { display: flex; flex-wrap: wrap; gap: 4px 10px; margin-bottom: 4px; }
+.log-details div { font-size: 0.95em; color: #aaa;}
+.log-details strong { color: #bbb; }
+
+.log-message { margin-top: 4px; }
+.log-message strong { display: block; margin-bottom: 2px; color: #bbb; }
+
+.message-content-preview {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  padding: 5px 8px;
+  border-radius: 4px;
+  max-height: 100px; /* Limit preview height */
+  overflow: hidden;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: #ccc;
+  font-family: monospace;
+  font-size: 0.95em;
+}
+/* Add specific styles for error logs? */
+.debug-log.error { background-color: rgba(244, 67, 54, 0.1); border-left: 3px solid #f44336; }
+.debug-log.error .log-type { color: #f44336; }
+
+.no-logs { padding: 15px; color: #888; font-style: italic; text-align: center; }
+
+.clear-debug-button {
+  width: 100%;
+  margin-top: 10px;
+  background-color: #555;
+  color: #ccc;
+  border: 1px solid #666;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background-color 0.2s ease;
+}
+.clear-debug-button:hover { background-color: #666; }
+
+/* File Pool Placeholder */
+.file-pool-placeholder { text-align: center; color: #888; font-style: italic; padding: 20px; }
+
+/* Confirmation Modal (Copied from stable MainArea.css) */
+.confirmation-modal-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex; justify-content: center; align-items: center;
+  z-index: 1000;
+}
+.confirmation-modal {
+  background-color: #303134; border-radius: 8px; padding: 25px;
+  width: 400px; max-width: 90%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); color: #e8eaed;
+}
+.confirmation-modal h3 { margin-top: 0; margin-bottom: 16px; font-size: 1.2em; }
+.confirmation-modal p { margin-bottom: 25px; line-height: 1.5; font-size: 0.95em; }
+.confirmation-buttons { display: flex; justify-content: flex-end; gap: 12px; }
+.confirmation-buttons button {
+  padding: 8px 18px; border-radius: 6px; border: none;
+  cursor: pointer; font-weight: 600; font-size: 14px;
+  transition: background-color 0.2s ease;
+}
+.confirmation-buttons .cancel-button { background-color: #555; color: #e8eaed; }
+.confirmation-buttons .confirm-button { background-color: #c74037; color: white; } /* Darker red */
+.confirmation-buttons .cancel-button:hover { background-color: #666; }
+.confirmation-buttons .confirm-button:hover { background-color: #d32f2f; } /* Brighter red on hover */
