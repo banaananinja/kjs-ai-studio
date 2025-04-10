@@ -1,9 +1,9 @@
 // src/components/MainArea.jsx
-// *** Temporarily Remove Markdown Plugins for Debugging ***
+// *** Phase 4: Re-enabling remarkGfm plugin ***
 import React, { useState, useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
 import ReactMarkdown from 'react-markdown';
-// import rehypeHighlight from 'rehype-highlight'; // Temporarily commented out
-// import remarkGfm from 'remark-gfm'; // Temporarily commented out
+// import rehypeHighlight from 'rehype-highlight'; // Keep this commented for now
+import remarkGfm from 'remark-gfm';             // *** Re-enabled ***
 import { generateChatResponse, countTokens } from '../services/geminiService';
 import './MainArea.css';
 
@@ -78,13 +78,16 @@ const MainArea = forwardRef(({ /* ...props... */
               {editingMessageId === msg.id ? (
                 <textarea className="edit-message-textarea" value={editingContent} onChange={(e) => setEditingContent(e.target.value)} rows={Math.max(3, editingContent.split('\n').length)} autoFocus />
               ) : (
-                // *** RENDER MARKDOWN WITHOUT PLUGINS ***
+                // *** ADDING remarkGfm plugin BACK ***
                 <div className="markdown-content">
-                  <ReactMarkdown>
+                  <ReactMarkdown
+                    // rehypePlugins={[rehypeHighlight]} // Keep commented out for now
+                    remarkPlugins={[remarkGfm]}      // *** Re-enabled ***
+                  >
                     {msg.content || ''}
                   </ReactMarkdown>
                 </div>
-                // *** END RENDER MARKDOWN WITHOUT PLUGINS ***
+                // *** END CHANGE ***
               )}
             </div>
           </div>
