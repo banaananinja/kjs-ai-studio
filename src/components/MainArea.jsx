@@ -3,9 +3,23 @@ import React, { useState } from 'react';
 import GeminiPrompt from './GeminiPrompt';
 import './MainArea.css';
 
-function MainArea({ selectedModel }) {
-  const [systemInstructions, setSystemInstructions] = useState('');
-  const [showInstructions, setShowInstructions] = useState(true);
+function MainArea({ selectedModel, systemInstructions: externalSystemInstructions, onSystemInstructionsChange, enableCodeExecution }) {
+  // Use local state if external props aren't provided
+  const [localSystemInstructions, setLocalSystemInstructions] = useState('');
+  const [filePool, setFilePool] = useState([]);
+  const [showInstructions, setShowInstructions] = useState(false);
+  
+  // Determine whether to use props or local state
+  const systemInstructions = externalSystemInstructions !== undefined ? externalSystemInstructions : localSystemInstructions;
+  
+  // Handle changes to system instructions
+  const handleSystemInstructionsChange = (value) => {
+    if (onSystemInstructionsChange) {
+      onSystemInstructionsChange(value);
+    } else {
+      setLocalSystemInstructions(value);
+    }
+  };
 
   return (
     <div className="main-area">
@@ -26,7 +40,7 @@ function MainArea({ selectedModel }) {
               id="system-instructions"
               className="system-instructions-input"
               value={systemInstructions}
-              onChange={(e) => setSystemInstructions(e.target.value)}
+              onChange={(e) => handleSystemInstructionsChange(e.target.value)}
               placeholder="Enter system instructions to guide the model's behavior (optional)"
               rows="3"
             />
@@ -37,7 +51,13 @@ function MainArea({ selectedModel }) {
           </>
         )}
       </div>
-      <GeminiPrompt selectedModel={selectedModel} systemInstructions={systemInstructions} />
+      
+      <GeminiPrompt 
+        selectedModel={selectedModel} 
+        systemInstructions={systemInstructions}
+        enableCodeExecution={enableCodeExecution}
+        filePool={filePool}
+      />
     </div>
   );
 }
