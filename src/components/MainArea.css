@@ -7,6 +7,9 @@
   height: 100%;
   max-height: 100vh;
   overflow: hidden; /* Prevent scrolling beyond bounds */
+  scrollbar-width: thin;
+  scrollbar-color: #444 #2d2d2d;
+  -ms-overflow-style: none;
 }
 
 .system-instructions-container {
@@ -129,4 +132,25 @@
   flex-direction: column;
   min-height: 0;
   overflow: hidden;
+}
+
+/* Dark Mode Scrollbar Styling */
+.main-area::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.main-area::-webkit-scrollbar-thumb {
+  background-color: #444;
+  border-radius: 4px;
+  border: 2px solid #2d2d2d;
+}
+
+.main-area::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+.main-area::-webkit-scrollbar-track {
+  background-color: #2d2d2d;
+  border-radius: 4px;
 }
