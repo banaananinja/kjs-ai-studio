@@ -281,9 +281,6 @@
 .markdown-content ul, .markdown-content ol { padding-left: 1.8em; margin: 0.8em 0; }
 .markdown-content li { margin: 0.3em 0; }
 .markdown-content blockquote { border-left: 4px solid #555; margin: 1em 0; padding: 0.5em 1em; color: #aaa; background-color: #2a2a2a; }
-.markdown-content code { font-family: 'Courier New', monospace; padding: 2px 5px; background-color: #282c34; border-radius: 3px; font-size: 0.9em; color: #abb2bf; }
-.markdown-content pre { background-color: #282c34; padding: 12px; border-radius: 5px; overflow-x: auto; margin: 1em 0; font-size: 0.9em; }
-.markdown-content pre code { background-color: transparent; padding: 0; border-radius: 0; color: inherit; font-size: inherit;}
 .markdown-content a { color: #8ab4f8; text-decoration: none; }
 .markdown-content a:hover { text-decoration: underline; }
 .markdown-content table { border-collapse: collapse; width: 100%; margin: 1em 0; background-color: #2a2a2a; }
@@ -291,6 +288,43 @@
 .markdown-content th { background-color: #3c4043; font-weight: bold; }
 .markdown-content tr:nth-child(even) { background-color: #303030; }
 .markdown-content img { max-width: 100%; border-radius: 4px; margin: 0.5em 0; }
+
+/* === Markdown Code Styling (Updated for highlight.js theme compatibility) === */
+
+/* Style for inline code */
+.markdown-content code {
+  font-family: 'Courier New', monospace; /* Or your preferred monospace font */
+  padding: 2px 5px;
+  background-color: #282c34; /* Specific background for inline code */
+  border-radius: 3px;
+  font-size: 0.9em;
+  color: #abb2bf; /* Specific color for inline code */
+}
+
+/* Style for code blocks (<pre> tag) */
+.markdown-content pre {
+  /* background-color: #282c34; */ /* Let the highlight.js theme handle the background */
+  padding: 12px;
+  border-radius: 5px;
+  overflow-x: auto; /* Enable horizontal scroll for long lines */
+  margin: 1em 0;
+  font-size: 0.9em;
+  /* Ensure text color is readable if theme doesn't set it */
+  color: #abb2bf; /* Default light text for dark themes */
+  border: 1px solid #444; /* Add a subtle border */
+}
+
+/* Ensure code *inside* pre doesn't conflict with theme or inline styles */
+.markdown-content pre code {
+  background-color: transparent !important; /* Override any background */
+  padding: 0; /* Remove padding */
+  border-radius: 0;
+  color: inherit; /* Inherit color from <pre> or theme */
+  font-size: inherit; /* Inherit font size from <pre> */
+  white-space: pre; /* Ensure whitespace is preserved */
+}
+/* === End Markdown Code Styling === */
+
 
 /* Prompt Input Area */
 .prompt-form {

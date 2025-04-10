@@ -1,11 +1,14 @@
 // src/components/MainArea.jsx
-// *** Phase 4: Re-enabling remarkGfm plugin ***
+// *** Phase 4: Re-enabling rehypeHighlight plugin ***
 import React, { useState, useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
 import ReactMarkdown from 'react-markdown';
-// import rehypeHighlight from 'rehype-highlight'; // Keep this commented for now
-import remarkGfm from 'remark-gfm';             // *** Re-enabled ***
+import rehypeHighlight from 'rehype-highlight'; // *** Re-enabled ***
+import remarkGfm from 'remark-gfm';             // Keep enabled
 import { generateChatResponse, countTokens } from '../services/geminiService';
 import './MainArea.css';
+import 'highlight.js/styles/github-dark.css'; // Or choose another theme
+// *** You might need to import a CSS theme for highlighting later ***
+// import 'highlight.js/styles/github-dark.css'; // Example theme
 
 // Model token limits
 const MODEL_TOKEN_LIMITS = { /* ...limits... */ 'gemini-2.5-pro-exp-03-25': 1048576, 'gemini-1.5-pro': 2097152, 'gemini-1.5-flash-8b': 1048576, 'gemini-1.5-flash': 1048576, 'gemini-2.0-flash': 1048576, 'gemini-2.0-flash-lite': 1048576, 'gemini-1.0-pro': 32768, };
@@ -78,11 +81,11 @@ const MainArea = forwardRef(({ /* ...props... */
               {editingMessageId === msg.id ? (
                 <textarea className="edit-message-textarea" value={editingContent} onChange={(e) => setEditingContent(e.target.value)} rows={Math.max(3, editingContent.split('\n').length)} autoFocus />
               ) : (
-                // *** ADDING remarkGfm plugin BACK ***
+                // *** RE-ENABLE rehypeHighlight plugin ***
                 <div className="markdown-content">
                   <ReactMarkdown
-                    // rehypePlugins={[rehypeHighlight]} // Keep commented out for now
-                    remarkPlugins={[remarkGfm]}      // *** Re-enabled ***
+                    rehypePlugins={[rehypeHighlight]} // *** Re-enabled ***
+                    remarkPlugins={[remarkGfm]}      // Keep enabled
                   >
                     {msg.content || ''}
                   </ReactMarkdown>
