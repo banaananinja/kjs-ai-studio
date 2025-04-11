@@ -1,6 +1,8 @@
 {
-  "name": "my-gemini-app-2",
-  "version": "0.2.0",
+  "name": "kjs-ai-studio",
+  "version": "0.5.1",
+  "description": "KJ's AI Studio Application",
+  "author": "Kieren",
   "private": true,
   "main": "public/electron.js",
   "homepage": "./",
@@ -10,6 +12,7 @@
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
     "electron-store": "^8.2.0",
+    "electron-updater": "^6.1.8",
     "highlight.js": "^11.9.0",
     "pdfjs-dist": "3.4.120",
     "react": "^18.2.0",
@@ -26,7 +29,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "electron-dev": "concurrently -k \"cross-env BROWSER=none npm run react-start\" \"wait-on http://localhost:3000 && electron .\"",
-    "electron-build": "npm run react-build && electron-builder"
+    "electron-build": "npm run react-build && electron-builder",
+    "publish": "npm run react-build && electron-builder --publish always"
   },
   "eslintConfig": {
     "extends": [
@@ -55,7 +59,7 @@
     "wait-on": "^7.2.0"
   },
   "build": {
-    "appId": "com.kieren.kjsaistudio",
+    "appId": "com.banaananinja.kjsaistudio",
     "productName": "KJ's AI Studio",
     "files": [
       "build/**/*",
@@ -67,6 +71,11 @@
     "directories": {
       "buildResources": "public",
       "output": "dist"
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "banaananinja",
+      "repo": "kjs-ai-studio"
     },
     "win": {
       "target": "nsis",
