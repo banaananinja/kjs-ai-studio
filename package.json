@@ -11,6 +11,7 @@
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
+    "electron-log": "^5.1.2",
     "electron-store": "^8.2.0",
     "electron-updater": "^6.1.8",
     "highlight.js": "^11.9.0",
