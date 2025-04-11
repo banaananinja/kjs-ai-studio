@@ -9,7 +9,7 @@
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
-    "electron-store": "^10.0.1",
+    "electron-store": "^8.2.0",
     "highlight.js": "^11.9.0",
     "pdfjs-dist": "3.4.120",
     "react": "^18.2.0",
@@ -55,24 +55,30 @@
     "wait-on": "^7.2.0"
   },
   "build": {
-    "appId": "com.you.mygeminiapp2",
+    "appId": "com.kieren.kjsaistudio",
+    "productName": "KJ's AI Studio",
     "files": [
       "build/**/*",
       "public/electron.js",
       "public/preload.js",
-      "node_modules/**/*"
+      "node_modules/**/*",
+      "public/KJ_AI_SMALL-v2.png"
     ],
     "directories": {
-      "buildResources": "assets"
+      "buildResources": "public",
+      "output": "dist"
     },
     "win": {
-      "target": "nsis"
+      "target": "nsis",
+      "icon": "public/KJ_AI_SMALL-v2.png"
     },
     "mac": {
-      "target": "dmg"
+      "target": "dmg",
+      "icon": "public/KJ_AI_SMALL-v2.png"
     },
     "linux": {
-      "target": "AppImage"
+      "target": "AppImage",
+      "icon": "public/KJ_AI_SMALL-v2.png"
     }
   }
 }
