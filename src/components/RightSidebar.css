@@ -148,3 +148,83 @@
 .confirmation-buttons .confirm-button { background-color: #c74037; color: white; }
 .confirmation-buttons .cancel-button:hover { background-color: #666; }
 .confirmation-buttons .confirm-button:hover { background-color: #d32f2f; }
+
+/* === File Browser Section Styles === */
+
+.file-browser-section .dropdown-menu-content {
+  /* Remove default padding if FileBrowser handles its own */
+  padding: 0;
+}
+
+.file-browser-content {
+  /* Container for FileBrowser component + actions */
+  padding: 15px; /* Add padding back here */
+}
+
+.file-browser-actions {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #444;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between; /* Space out buttons */
+}
+
+.file-browser-actions .pool-action-button {
+  /* Inherits base style, add specifics */
+  flex: 1; /* Make buttons share space */
+}
+
+.file-browser-actions .process-button {
+  background-color: #4a6e4f; /* Greenish */
+  color: #e0f0e3;
+  border: 1px solid #6a8e6f;
+}
+.file-browser-actions .process-button:hover:not(:disabled) {
+  background-color: #5a7e5f;
+}
+
+.file-browser-actions .clear-selection-button {
+   background-color: #5c2d2d; /* Dark red */
+   color: #f0dcdc;
+   border: 1px solid #7a3636;
+}
+.file-browser-actions .clear-selection-button:hover:not(:disabled) {
+   background-color: #7a3636;
+}
+
+/* Add styles for debug actions wrapper and copy button */
+.debug-actions {
+  display: flex;
+  gap: 10px; /* Space between buttons */
+  margin-top: 10px;
+}
+
+.debug-actions button {
+  flex: 1; /* Make buttons share space */
+  width: auto; /* Override previous width if needed */
+  margin-top: 0; /* Remove top margin from individual buttons */
+  background-color: #555;
+  color: #ccc;
+  border: 1px solid #666;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background-color 0.2s ease;
+}
+
+.debug-actions button:hover {
+  background-color: #666;
+}
+
+.copy-debug-button {
+  /* Add any specific styles if different from clear button */
+  /* background-color: #4a6e4f; */ /* Example: greenish */
+}
+
+/* Adjust original clear button if it had width:100% */
+.clear-debug-button {
+   width: auto; /* Remove 100% width if set previously */
+   margin-top: 0;
+}
