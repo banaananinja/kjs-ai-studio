@@ -1,10 +1,30 @@
 /* src/components/MainArea.css */
 
 /* Overall Container */
-.main-area-container { display: flex; flex-direction: column; height: 100%; overflow: hidden; background-color: #202124; color: #e8eaed; padding: 0; flex: 1; min-width: 0; transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out; opacity: 1; transform: translateX(0%); position: relative; z-index: 20; }
+.main-area-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  background-color: #202124;
+  color: #e8eaed;
+  padding: 0;
+  min-width: 0;
+  flex: 1;
+  position: relative; /* Needed for absolute positioning context */
+}
 
 /* System Instructions */
-.system-instructions-container { padding: 15px 20px; background-color: #2d2d2d; border-bottom: 1px solid #3c4043; flex-shrink: 0; transition: max-height 0.3s ease-out, padding 0.3s ease-out; overflow: hidden; }
+.system-instructions-container {
+  padding: 15px 20px;
+  background-color: #2d2d2d;
+  border-bottom: 1px solid #3c4043;
+  flex-shrink: 0;
+  transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+  overflow: hidden;
+  z-index: 10;
+  position: relative;
+}
 .system-instructions-container.collapsed { max-height: 50px; padding-top: 10px; padding-bottom: 10px; }
 .system-instructions-container.expanded { max-height: 250px; }
 .instructions-header { display: flex; justify-content: space-between; align-items: center; cursor: pointer; margin-bottom: 10px; }
@@ -14,30 +34,62 @@
 .system-instructions-input { width: 100%; padding: 10px 12px; border: 1px solid #555; border-radius: 8px; font-size: 14px; resize: vertical; min-height: 60px; transition: border 0.3s ease, box-shadow 0.3s ease; font-family: inherit; background-color: #333; color: #e0e0e0; margin-bottom: 10px; box-sizing: border-box; }
 .system-instructions-input:focus { border-color: #4d7eff; outline: none; box-shadow: 0 0 0 2px rgba(77, 126, 255, 0.3); }
 
-/* Chat History Area */
-.chat-history { flex: 1; overflow-y: auto; padding: 20px; min-height: 0; scrollbar-width: thin; scrollbar-color: #444 #2d2d2d; }
+/* Wrapper for Chat History */
+.chat-history-wrapper {
+  flex: 1 1 auto; /* Allow growing/shrinking */
+  overflow: hidden; /* Hide overflow */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 110px; /* Space for absolute prompt form */
+  box-sizing: border-box;
+}
+
+/* Chat History Area (Scrollable part) */
+.chat-history {
+  overflow-y: auto; /* Scroll THIS area */
+  padding: 20px;
+  height: 100%; /* Fill the wrapper */
+  box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: #444 #2d2d2d;
+}
 .chat-history::-webkit-scrollbar { width: 8px; }
 .chat-history::-webkit-scrollbar-track { background: #2d2d2d; border-radius: 4px; }
 .chat-history::-webkit-scrollbar-thumb { background-color: #444; border-radius: 4px; border: 2px solid #2d2d2d; }
 .chat-history::-webkit-scrollbar-thumb:hover { background-color: #555; }
 
-/* Message Bubbles */
+
+/* Prompt Input Area (Absolute Positioning) */
+.prompt-form {
+  position: absolute; /* Position relative to main-area-container */
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 15px 20px;
+  border-top: 1px solid #3c4043;
+  background-color: #202124; /* Ensure background covers content */
+  z-index: 50; /* Ensure it's above chat history */
+  box-sizing: border-box;
+}
+.input-container { display: flex; gap: 10px; align-items: flex-end; }
+.prompt-textarea { flex: 1; padding: 10px 12px; background-color: #303134; color: #e8eaed; border: 1px solid #3c4043; border-radius: 8px; resize: vertical; min-height: 44px; max-height: 200px; overflow-y: auto; font-family: inherit; font-size: 14px; line-height: 1.4; box-sizing: border-box; }
+.prompt-textarea:focus { border-color: #8ab4f8; outline: none; box-shadow: 0 0 0 2px rgba(138, 180, 248, 0.3); }
+.side-buttons { display: flex; flex-direction: column; gap: 8px; }
+.side-buttons button { padding: 10px 15px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; font-size: 14px; transition: background-color 0.2s ease, opacity 0.2s ease; min-width: 90px; text-align: center; }
+.run-button { background-color: #8ab4f8; color: #202124; } .run-button:hover:not(:disabled) { background-color: #aecbfa; }
+.append-button { background-color: #3c4043; color: #e8eaed; } .append-button:hover:not(:disabled) { background-color: #5f6368; }
+.side-buttons button:disabled { opacity: 0.5; cursor: not-allowed; background-color: #5f6368; }
+
+
+/* --- Remaining styles (Message Bubbles, Markdown, Dropdown) --- */
 .message-bubble { position: relative; padding: 15px 20px 15px 20px; padding-top: 45px; border-radius: 12px; max-width: 90%; min-width: 60%; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); margin-bottom: 15px; transition: max-height 0.3s ease, background-color 0.2s ease; overflow: visible; }
 .message-bubble.user { background-color: #2a2f38; margin-left: auto; border-top-right-radius: 4px; }
 .message-bubble.assistant { background-color: #1e2127; margin-right: auto; border-top-left-radius: 4px; }
 .message-bubble.error { background-color: #4d2a2a; border-left: 4px solid #f28b82; }
 .message-bubble.loading { padding: 15px 20px; font-style: italic; color: #aaa; }
 .message-sender { position: absolute; top: 15px; left: 20px; font-weight: bold; font-size: 0.9em; color: #aaa; }
-
-/* Message Actions (Buttons) */
-.message-actions {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  display: flex;
-  gap: 8px;
-  z-index: 900; /* Lower than dropdown */
-}
+.message-actions { position: absolute; top: 10px; right: 15px; display: flex; gap: 8px; z-index: 900; }
 .action-button { background-color: rgba(74, 74, 74, 0.7); border: 1px solid rgba(255, 255, 255, 0.2); color: white; font-size: 16px; cursor: pointer; padding: 0; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; transition: background-color 0.2s ease, transform 0.1s ease; line-height: 1; }
 .action-button:hover { background-color: #666; transform: scale(1.1); }
 .action-button.save { background-color: rgba(66, 133, 244, 0.7); border-color: rgba(66, 133, 244, 1); }
@@ -52,28 +104,10 @@
 .message-bubble:not(.expanded) .message-content-wrapper::-webkit-scrollbar-thumb { background-color: #555; border-radius: 3px; }
 .message-bubble:not(.expanded) .message-content-wrapper::-webkit-scrollbar-track { background: #333; border-radius: 3px; }
 .message-bubble.expanded .message-content-wrapper { max-height: none; overflow: visible; }
-
-/* Dropdown Menu (Message Actions) */
-.dropdown-container {
-  position: relative; /* Set as positioning context */
-  display: inline-block; /* Or just block if needed */
-}
-.dropdown-menu {
-  /* --- FIX: Use absolute positioning --- */
-  position: absolute;
-  /* Position below and to the right of the button's container */
-  top: 100%;  /* Position below the container */
-  right: 0;   /* Align to the right edge of the container */
-  margin-top: 5px; /* Small gap */
-  /* --- END FIX --- */
-  background-color: #2d2d2d; border: 1px solid #555; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-  z-index: 1000; /* Ensure it's above actions */
-  min-width: 140px; padding: 5px 0; overflow: hidden;
-}
+.dropdown-container { position: relative; display: inline-block; }
+.dropdown-menu { position: absolute; top: 100%; right: 0; margin-top: 5px; background-color: #2d2d2d; border: 1px solid #555; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.4); z-index: 1000; min-width: 140px; padding: 5px 0; overflow: hidden; }
 .dropdown-menu button { display: block; width: 100%; text-align: left; padding: 8px 15px; border: none; background: none; cursor: pointer; color: #e0e0e0; font-size: 14px; white-space: nowrap; }
 .dropdown-menu button:hover { background-color: #444; }
-
-/* Markdown Content Styling */
 .markdown-content { line-height: 1.6; word-wrap: break-word; color: #e8eaed; }
 .markdown-content p { margin: 0.5em 0; }
 .markdown-content h1, .markdown-content h2, .markdown-content h3, .markdown-content h4, .markdown-content h5, .markdown-content h6 { margin-top: 1em; margin-bottom: 0.5em; font-weight: 600; color: #e8eaed; border-bottom: 1px solid #444; padding-bottom: 0.2em; }
@@ -88,14 +122,3 @@
 .markdown-content code { font-family: 'Courier New', monospace; padding: 2px 5px; background-color: #282c34; border-radius: 3px; font-size: 0.9em; color: #abb2bf; }
 .markdown-content pre { padding: 12px; border-radius: 5px; overflow-x: auto; margin: 1em 0; font-size: 0.9em; color: #abb2bf; border: 1px solid #444; }
 .markdown-content pre code { background-color: transparent !important; padding: 0; border-radius: 0; color: inherit; font-size: inherit; white-space: pre; }
-
-/* Prompt Input Area */
-.prompt-form { padding: 15px 20px; border-top: 1px solid #3c4043; background-color: #202124; flex-shrink: 0; }
-.input-container { display: flex; gap: 10px; align-items: flex-end; }
-.prompt-textarea { flex: 1; padding: 10px 12px; background-color: #303134; color: #e8eaed; border: 1px solid #3c4043; border-radius: 8px; resize: vertical; min-height: 44px; max-height: 200px; overflow-y: auto; font-family: inherit; font-size: 14px; line-height: 1.4; box-sizing: border-box; }
-.prompt-textarea:focus { border-color: #8ab4f8; outline: none; box-shadow: 0 0 0 2px rgba(138, 180, 248, 0.3); }
-.side-buttons { display: flex; flex-direction: column; gap: 8px; }
-.side-buttons button { padding: 10px 15px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; font-size: 14px; transition: background-color 0.2s ease, opacity 0.2s ease; min-width: 90px; text-align: center; }
-.run-button { background-color: #8ab4f8; color: #202124; } .run-button:hover:not(:disabled) { background-color: #aecbfa; }
-.append-button { background-color: #3c4043; color: #e8eaed; } .append-button:hover:not(:disabled) { background-color: #5f6368; }
-.side-buttons button:disabled { opacity: 0.5; cursor: not-allowed; background-color: #5f6368; }

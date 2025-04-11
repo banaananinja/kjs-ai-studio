@@ -1,0 +1,115 @@
+/* src/components/SettingsView.css */
+
+.settings-view {
+    padding: 30px;
+    height: 100%;
+    overflow-y: auto;
+    background-color: #202124; /* Match main area */
+    color: #e8eaed;
+  }
+  
+  .settings-view h2 {
+    margin-top: 0;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #444;
+    padding-bottom: 10px;
+  }
+  
+  .setting-item {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #2d2d2d;
+    border-radius: 8px;
+    border: 1px solid #3c4043;
+  }
+  
+  .setting-item label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    color: #e0e0e0;
+  }
+  
+  .api-key-input-wrapper {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      gap: 5px;
+  }
+  
+  .api-key-input {
+    flex-grow: 1; /* Take remaining space */
+    padding: 10px 12px;
+    border: 1px solid #555;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: inherit;
+    background-color: #333;
+    color: #e0e0e0;
+    min-width: 0; /* Allow shrinking in flex */
+  }
+  .api-key-input:focus {
+    border-color: #4d7eff;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(77, 126, 255, 0.3);
+  }
+  
+  .mask-toggle-button {
+      background: none;
+      border: none;
+      color: #aaa;
+      cursor: pointer;
+      font-size: 1.2em;
+      padding: 5px;
+      flex-shrink: 0;
+  }
+  .mask-toggle-button:hover {
+      color: #eee;
+  }
+  
+  
+  .save-button {
+    padding: 10px 20px;
+    background-color: #8ab4f8;
+    color: #202124;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: background-color 0.2s ease;
+  }
+  
+  .save-button:hover:not(:disabled) {
+    background-color: #aecbfa;
+  }
+  
+  .save-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  .status-message {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 0.9em;
+  }
+  
+  .status-message.success {
+    background-color: rgba(56, 142, 60, 0.2); /* Greenish */
+    color: #a5d6a7;
+  }
+  
+  .status-message.error {
+    background-color: rgba(211, 47, 47, 0.2); /* Reddish */
+    color: #ef9a9a;
+  }
+  
+  .api-key-help {
+    margin-top: 15px;
+    font-size: 0.85em;
+    color: #aaa;
+    line-height: 1.5;
+  }

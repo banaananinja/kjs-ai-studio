@@ -6,60 +6,56 @@
   color: #e8eaed;
   margin: 0;
   padding: 0;
-  overflow: hidden; /* Prevent whole page scroll */
-  position: relative; /* Needed for z-index context */
+  overflow: hidden;
+  position: relative;
 }
 
 /* --- Styles for Sidebar Expansion --- */
+.left-sidebar { z-index: 10; }
 
-/* Left Sidebar - Ensure it stays put */
-.left-sidebar {
-  z-index: 10; /* Below main area overlay */
-}
-
-/* Default state for main area */
-.main-area-container {
-  flex: 1; /* Take up remaining space */
-  min-width: 0; /* Allow shrinking */
-  /* Animate transform and opacity */
+.main-content-area {
+  flex: 1; /* Take remaining horizontal space */
+  min-width: 0;
+  display: flex; /* Use flex for its child */
+  flex-direction: column; /* Stack vertically */
+  overflow: hidden;
   transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
   opacity: 1;
-  transform: translateX(0%); /* Start in normal position */
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  position: relative; /* Needed for z-index and ::after */
-  z-index: 20; /* Above left sidebar */
+  transform: translateX(0%);
+  position: relative;
+  z-index: 20;
+}
+.main-content-area::after {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0, 0, 0, 0); pointer-events: none;
+    transition: background-color 0.3s ease-in-out; z-index: 25;
 }
 
-/* Default state for right sidebar (width controlled in its own CSS) */
-.right-sidebar {
-  /* Transition defined in RightSidebar.css */
-  z-index: 30; /* Above main area */
+/* This targets the actual div holding MainArea or SettingsView */
+.main-content-area > div {
+   flex: 1; /* Make the child (MainArea/SettingsView) fill the wrapper */
+   display: flex; /* Use flex here too */
+   flex-direction: column; /* Ensure vertical layout inside */
+   min-height: 0; /* Allow shrinking if needed */
+   overflow: hidden; /* Prevent overflow */
 }
 
-/* State when Right Sidebar is Expanded */
-.App.right-sidebar-expanded .main-area-container {
-  /* Slide main area completely off-screen to the left */
-  transform: translateX(-100%);
-  opacity: 0.3; /* Fade out slightly */
-  /* We don't change flex/width, just slide it */
+
+.right-sidebar { z-index: 30; } /* Ensure RightSidebar is on top */
+
+
+/* Adjustments when sidebar is expanded */
+.App.right-sidebar-expanded .main-content-area {
+    flex-basis: 0px;
+    min-width: 0;
+    opacity: 0.3;
+    transform: translateX(-100%);
+    overflow: hidden;
+}
+ .App.right-sidebar-expanded .main-content-area::after {
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .App.right-sidebar-expanded .right-sidebar {
-  width: calc(100% - 200px); /* Expand width */
-}
-
-/* Optional overlay for MainArea when sidebar is expanded */
-.main-area-container::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-color: rgba(0, 0, 0, 0);
-    pointer-events: none;
-    transition: background-color 0.3s ease-in-out;
-    z-index: 25; /* Above main content, below right sidebar */
-}
-.App.right-sidebar-expanded .main-area-container::after {
-    background-color: rgba(0, 0, 0, 0.5); /* Darker overlay */
+  width: calc(100% - 200px);
 }
